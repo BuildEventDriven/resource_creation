@@ -13,7 +13,17 @@ provider "google" {
   region  = var.region
 }
 
-# No need to reference broker files explicitly, Terraform will detect them.
+module "broker1" {
+  source = "./instances/kafka-brokers/instance-broker1.tf"
+}
+
+module "broker1" {
+  source = "./instances/kafka-brokers/instance-broker2.tf"
+}
+
+module "broker1" {
+  source = "./instances/kafka-brokers/instance-broker3.tf"
+}
 
 output "broker_instances" {
   value = {
