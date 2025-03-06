@@ -38,8 +38,8 @@ jobs:
         run: ls -R
       
       - name: Apply Terraform Changes
-        run: terraform -chdir=./resource_creation/terraform-scripts apply -auto-approve
-        working-directory: ./resource_creation/terraform-scripts
+        run: terraform -chdir=terraform-scripts apply -auto-approve
+        working-directory: .
 
       - name: Run ShellCheck
         run: |
