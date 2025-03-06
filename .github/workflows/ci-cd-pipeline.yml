@@ -35,7 +35,7 @@ jobs:
         run: gh workflow run ci-google-auth.yml || true  # Ensures it doesn't fail the pipeline
 
       - name: Apply Terraform Changes
-        run: terraform apply -auto-approve
+        run: terraform -chdir=terraform-scripts apply -auto-approve
         working-directory: terraform-scripts/
 
       - name: Run ShellCheck
