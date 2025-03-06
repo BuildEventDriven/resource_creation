@@ -20,22 +20,26 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
-        working-directory: ./resource_creation/terraform-scripts
+        working-directory: terraform-scripts/
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: ./resource_creation/terraform-scripts
+        working-directory: terraform-scripts/
 
       - name: Check Terraform Formatting
         run: terraform fmt -check
-        working-directory: ./resource_creation/terraform-scripts
+        working-directory: terraform-scripts/
 
       # Google authentication flow needs to run before running terraform-apply 
       - name: Run Google Cloud Authentication
         run: gh workflow run ci-google-auth.yml || true  # Ensures it doesn't fail the pipeline
 
+      - name: Debug Directory Structure
+        run: ls -R
+        run: pwd
+      
       - name: Apply Terraform Changes
-        run: terraform -chdir=terraform-scripts apply -auto-approve
+        run: terraform -chdir=./resource_creation/terraform-scripts apply -auto-approve
         working-directory: ./resource_creation/terraform-scripts
 
       - name: Run ShellCheck
