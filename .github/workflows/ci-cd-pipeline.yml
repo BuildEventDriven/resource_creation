@@ -18,9 +18,9 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Print Current Directory
-        run: |
-          pwd
+      - name: Check Terraform Formatting
+        run: terraform fmt -check
+        working-directory: terraform-scripts
 
       - name: Initialize Terraform
         run: terraform init
@@ -28,10 +28,6 @@ jobs:
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: terraform-scripts
-
-      - name: Check Terraform Formatting
-        run: terraform fmt -check
         working-directory: terraform-scripts
 
       # Google authentication flow needs to run before running terraform-apply 
