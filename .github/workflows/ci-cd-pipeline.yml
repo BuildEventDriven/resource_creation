@@ -22,13 +22,6 @@ jobs:
         run: |
           pwd
 
-      - name: Verify Terraform Files Exist
-        run: |
-          if [ ! -f terraform-scripts/main.tf ]; then
-            echo "Error: No Terraform configuration files found in terraform-scripts/"
-            exit 1
-          fi
-
       - name: Initialize Terraform
         run: terraform init
         working-directory: terraform-scripts
