@@ -20,15 +20,15 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
-        working-directory: terraform-scripts/
+        working-directory: ./resource_creation/terraform-scripts
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: terraform-scripts/
+        working-directory: ./resource_creation/terraform-scripts
 
       - name: Check Terraform Formatting
         run: terraform fmt -check
-        working-directory: terraform-scripts/
+        working-directory: ./resource_creation/terraform-scripts
 
       # Google authentication flow needs to run before running terraform-apply 
       - name: Run Google Cloud Authentication
@@ -36,7 +36,7 @@ jobs:
 
       - name: Apply Terraform Changes
         run: terraform -chdir=terraform-scripts apply -auto-approve
-        working-directory: terraform-scripts/
+        working-directory: ./resource_creation/terraform-scripts
 
       - name: Run ShellCheck
         run: |
