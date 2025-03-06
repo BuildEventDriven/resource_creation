@@ -1,7 +1,15 @@
 output "instance_names" {
-  value = [for instance in google_compute_instance.kafka_broker : instance.name]
+  value = {
+    broker1 = module.broker1.instance_name
+    broker2 = module.broker2.instance_name
+    broker3 = module.broker3.instance_name
+  }
 }
 
 output "instance_ips" {
-  value = [for instance in google_compute_instance.kafka_broker : instance.network_interface.0.network_ip]
+  value = {
+    broker1 = module.broker1.instance_ip
+    broker2 = module.broker2.instance_ip
+    broker3 = module.broker3.instance_ip
+  }
 }
