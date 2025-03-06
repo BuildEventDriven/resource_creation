@@ -18,28 +18,34 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Verify Terraform Files Exist
+        run: |
+          if [ ! -f terraform-scripts/main.tf ]; then
+            echo "Error: No Terraform configuration files found in terraform-scripts/"
+            exit 1
+          fi
+       - name: Current Directory
+        run: pwd
+
       - name: Initialize Terraform
         run: terraform init
-        working-directory: terraform-scripts/
+        working-directory: terraform-scripts
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: terraform-scripts/
+        working-directory: terraform-scripts
 
       - name: Check Terraform Formatting
         run: terraform fmt -check
-        working-directory: terraform-scripts/
+        working-directory: terraform-scripts
 
       # Google authentication flow needs to run before running terraform-apply 
       - name: Run Google Cloud Authentication
         run: gh workflow run ci-google-auth.yml || true  # Ensures it doesn't fail the pipeline
-
-      - name: Debug Directory Structure
-        run: ls -R
       
       - name: Apply Terraform Changes
-        run: terraform -chdir=terraform-scripts apply -auto-approve
-        working-directory: .
+        run: terraform apply -auto-approve
+        working-directory: terraform-scripts
 
       - name: Run ShellCheck
         run: |
