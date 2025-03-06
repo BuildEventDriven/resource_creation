@@ -18,16 +18,16 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Print Current Directory
+        run: |
+          pwd
+
       - name: Verify Terraform Files Exist
         run: |
           if [ ! -f terraform-scripts/main.tf ]; then
             echo "Error: No Terraform configuration files found in terraform-scripts/"
             exit 1
           fi
-
-      - name: Print Current Directory
-        run: |
-          pwd
 
       - name: Initialize Terraform
         run: terraform init
