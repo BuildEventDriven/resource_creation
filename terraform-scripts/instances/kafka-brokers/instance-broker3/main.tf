@@ -1,3 +1,7 @@
+variable "instance_names" {}
+variable "zones" {}
+variable "tags" {}
+
 resource "google_compute_instance" "kafka_broker_3" {
   name         = var.instance_names["broker3"]
   machine_type = var.instance_type

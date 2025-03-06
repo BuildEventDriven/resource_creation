@@ -15,15 +15,24 @@ provider "google" {
 
 # Call broker1 as a module
 module "broker1" {
-  source = "./instances/kafka-brokers/broker1"  
+  source         = "./instances/kafka-brokers/broker1"
+  instance_names = var.instance_names
+  zones          = var.zones
+  tags           = var.tags
 }
 
 module "broker2" {
-  source = "./instances/kafka-brokers/broker2"  
+  source         = "./instances/kafka-brokers/broker2"
+  instance_names = var.instance_names
+  zones          = var.zones
+  tags           = var.tags
 }
 
 module "broker3" {
-  source = "./instances/kafka-brokers/broker3"  
+  source         = "./instances/kafka-brokers/broker3"
+  instance_names = var.instance_names
+  zones          = var.zones
+  tags           = var.tags
 }
 
 output "broker_instances" {
