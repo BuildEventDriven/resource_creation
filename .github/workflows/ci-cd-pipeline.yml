@@ -18,7 +18,7 @@ jobs:
       - name: Check Current Directory
         run: |
           pwd
-        working-directory: cd /home/runner/work/resource_creation
+        working-directory: /home/runner/work/resource_creation
           
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
