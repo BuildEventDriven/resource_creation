@@ -15,9 +15,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check Current Directory
+        run: |
+          pwd
+          
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Check Current Directory
+        run: |
+          pwd
+          
       - name: Check Terraform Formatting
         run: terraform fmt -check
         working-directory: terraform-scripts
@@ -26,13 +34,18 @@ jobs:
         run: |
           pwd
           
-      - name: List directory
-        run: ls -R ./instances/kafka-brokers/
-
       - name: Initialize Terraform
         run: terraform init
         working-directory: terraform-scripts
 
+      - name: Check Current Directory
+        run: |
+          pwd
+          
+      - name: Check Current Directory
+        run: |
+          pwd
+          
       - name: Validate Terraform
         run: terraform validate
         working-directory: terraform-scripts
