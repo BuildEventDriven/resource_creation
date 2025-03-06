@@ -26,7 +26,8 @@ jobs:
           fi
 
       - name: Print Current Directory
-        run: echo "Current directory: $(pwd)"
+        run: |
+          pwd
 
       - name: Initialize Terraform
         run: terraform init
