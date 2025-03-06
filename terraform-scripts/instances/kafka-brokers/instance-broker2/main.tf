@@ -1,7 +1,7 @@
-resource "google_compute_instance" "kafka_broker_3" {
-  name         = var.instance_names["broker3"]
+resource "google_compute_instance" "kafka_broker_2" {
+  name         = var.instance_names["broker2"]
   machine_type = var.instance_type
-  zone         = var.zones["broker3"]
+  zone         = var.zones["broker2"]
 
   boot_disk {
     auto_delete = true
@@ -43,6 +43,7 @@ resource "google_compute_instance" "kafka_broker_3" {
   EOF
   }
 
+
   scheduling {
     automatic_restart   = false
     on_host_maintenance = "TERMINATE"
@@ -56,5 +57,12 @@ resource "google_compute_instance" "kafka_broker_3" {
     enable_vtpm                 = true
   }
 
-  tags = var.tags["broker3"]
+  tags = var.tags["broker2"]
+}
+output "instance_name" {
+value = google_compute_instance.kafka_broker_2.name
+}
+
+output "instance_ip" {
+value = google_compute_instance.kafka_broker_2.network_interface.0.network_ip
 }
