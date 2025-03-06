@@ -22,9 +22,8 @@ jobs:
         run: terraform fmt -check
         working-directory: terraform-scripts
 
-      - name: Check Terraform Formatting
-        run: terraform fmt -recursive
-        working-directory: terraform-scripts
+      - name: List directory
+        run: ls -R instances/kafka-brokers/
 
       - name: Initialize Terraform
         run: terraform init
