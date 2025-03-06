@@ -24,8 +24,9 @@ jobs:
             echo "Error: No Terraform configuration files found in terraform-scripts/"
             exit 1
           fi
-       - name: Current Directory
-        run: pwd
+
+      - name: Print Current Directory
+        run: echo "Current directory: $(pwd)"
 
       - name: Initialize Terraform
         run: terraform init
