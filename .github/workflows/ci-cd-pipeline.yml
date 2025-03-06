@@ -36,7 +36,6 @@ jobs:
 
       - name: Debug Directory Structure
         run: ls -R
-        run: pwd
       
       - name: Apply Terraform Changes
         run: terraform -chdir=./resource_creation/terraform-scripts apply -auto-approve
