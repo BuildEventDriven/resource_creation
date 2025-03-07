@@ -9,8 +9,9 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project     = var.project_id
+  region      = var.region
+  credentials = file("${path.module}/gcp-key.json")
 }
 
 # Load network module (Optional: if you have a network.tf)
