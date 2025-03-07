@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  project = "BuildEventDriven"
+  project = var.project_id
   region  = var.region
 }
 

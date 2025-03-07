@@ -9,6 +9,7 @@ repos:
     rev: v1.35.1
     hooks:
       - id: yamllint
+        args: [--config-file=.yamllint]
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.97.4

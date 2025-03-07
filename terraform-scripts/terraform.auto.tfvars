@@ -1,3 +1,4 @@
+project_id            = "buildeventdriven"
 region                = "us-east1"
 instance_type         = "n2-standard-4"
 subnet                = "projects/reflected-oath-452112-d0/regions/us-east1/subnetworks/default"
