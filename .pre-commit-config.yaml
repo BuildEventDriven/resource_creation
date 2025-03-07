@@ -1,21 +1,27 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 24.1.1
+    rev: 25.1.0
     hooks:
       - id: black
         language_version: python3
 
-  - repo: https://github.com/terraform-linters/tflint
-    rev: v0.38.1
-    hooks:
-      - id: tflint
+  # - repo: https://github.com/adrienverge/yamllint
+  #   rev: v1.35.1
+  #   hooks:
+  #     - id: yamllint
 
-  - repo: https://github.com/koalaman/shellcheck-precommit
-    rev: v0.9.0
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.97.4
     hooks:
-      - id: shellcheck
+      - id: terraform_fmt
+      - id: terraform_validate
 
-  - repo: https://github.com/GoogleCloudPlatform/terraform-validator
-    rev: v2023.02.17
-    hooks:
-      - id: terraform-validator
+  # - repo: https://github.com/cachix/pre-commit-hooks
+  #   rev: v2.0.0
+  #   hooks:
+  #     - id: shellcheck
+
+  # - repo: https://github.com/terraform-linters/pre-commit-tflint
+  #   rev: v0.38.1
+  #   hooks:
+  #     - id: tflint
