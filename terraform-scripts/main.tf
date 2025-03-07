@@ -13,28 +13,25 @@ provider "google" {
   region  = var.region
 }
 
-# Call broker1 as a module
+# Load network module (Optional: if you have a network.tf)
+module "network" {
+  source = "./network"
+}
+
+# Load broker modules
 module "broker1" {
-  source         = "./instances/kafka-brokers/instance-broker1"
-  instance_names = var.instance_names
-  zones          = var.zones
-  tags           = var.tags
+  source = "./instances/kafka-brokers/instance-broker1"
 }
 
 module "broker2" {
-  source         = "./instances/kafka-brokers/instance-broker2"
-  instance_names = var.instance_names
-  zones          = var.zones
-  tags           = var.tags
+  source = "./instances/kafka-brokers/instance-broker2"
 }
 
 module "broker3" {
-  source         = "./instances/kafka-brokers/instance-broker3"
-  instance_names = var.instance_names
-  zones          = var.zones
-  tags           = var.tags
+  source = "./instances/kafka-brokers/instance-broker3"
 }
 
+# Output instance names
 output "broker_instances" {
   value = {
     broker1 = module.broker1.instance_name
@@ -43,6 +40,7 @@ output "broker_instances" {
   }
 }
 
+# Output instance IPs
 output "broker_ips" {
   value = {
     broker1 = module.broker1.instance_ip
