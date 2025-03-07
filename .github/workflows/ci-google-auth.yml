@@ -12,27 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      
+      - name: Save GCP Service Account Key (Properly)
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > gcp-key.json
 
       - name: Authenticate with Google Cloud
         run: |
-          # Save the secret to a file properly
-          echo "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
-          
-      - name: Verify JSON Format and Authenticate
-        run: |
-          cat gcp-key.json | jq empty || echo "JSON is invalid!"
-
-          # Ensure the file is correctly formatted
-          cat gcp-key.json
-
-          # Authenticate with the Service Account
           gcloud auth activate-service-account --key-file=gcp-key.json
-
-          # Set GCP Project
           gcloud config set project ${{ secrets.GCP_PROJECT }}
-
-          # Verify authentication
           gcloud auth list
-
-          # Ensure the key file is accessible
-          ls -l gcp-key.json
