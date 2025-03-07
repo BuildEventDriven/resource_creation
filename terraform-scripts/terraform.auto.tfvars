@@ -5,6 +5,7 @@ subnet                = "projects/reflected-oath-452112-d0/regions/us-east1/subn
 image                 = "projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250228"
 disk_size             = 30
 service_account_email = "teraform-create-manage@buildeventdriven.iam.gserviceaccount.com"
+terraform_repo_path   = "resource_creation/resource_creation/terraform-scripts"
 
 instance_names = {
   broker1 = "kafka-broker-1"

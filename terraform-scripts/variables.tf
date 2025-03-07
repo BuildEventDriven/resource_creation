@@ -47,3 +47,8 @@ variable "tags" {
   description = "Map of tags assigned to brokers"
   type        = map(list(string))
 }
+
+variable "terraform_repo_path" {
+  description = "{repo-name}/{repo-name}/{terraform-directory-name}"
+  type        = string
+}
