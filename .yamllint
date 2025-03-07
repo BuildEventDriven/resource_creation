@@ -1,9 +1,4 @@
 extends: default
 
 rules:
-  document-start: disable  # Ignore missing '---' at the beginning
-  truthy: disable          # Ignore truthy values (e.g., 'yes', 'no')
-  comments: disable        # Ignore incorrect comment spacing
   line-length: disable     # Ignore long lines >80 characters
-  empty-lines: disable     # Ignore excessive empty lines
-  trailing-spaces: disable # Ignore trailing spaces
