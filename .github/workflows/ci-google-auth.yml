@@ -17,10 +17,6 @@ jobs:
         run: |
           echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > gcp-key.json
 
-      - name: Save GCP Service Account Key - Also under terraform-scripts
-        run: |
-          echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > ${{ github.workspace }}/terraform-scripts/gcp-key.json
-
       - name: Authenticate with Google Cloud
         run: |
           gcloud auth activate-service-account --key-file=gcp-key.json
