@@ -38,14 +38,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}  # Set GH_TOKEN explicitly
 
-      - name: Debug: Check GH_TOKEN availability
+      - name: Debug Step
         run: |
-          echo "Checking GH_TOKEN..."
-          if [ -z "$GH_TOKEN" ]; then
-            echo "GH_TOKEN is NOT set!"
-            exit 1
-          else
-            echo "GH_TOKEN is set!"
+          echo "Debugging GH_TOKEN..."
+          echo "GH_TOKEN=${{ secrets.GH_PAT }}"
 
       - name: Run Google Cloud Authentication
         run: gh workflow run ci-google-auth.yml --ref main
