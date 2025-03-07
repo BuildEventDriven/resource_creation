@@ -18,6 +18,10 @@ jobs:
           # Save the secret to a file properly
           echo "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
           
+      - name: Verify JSON Format and Authenticate
+        run: |
+          cat gcp-key.json | jq empty || echo "JSON is invalid!"
+
           # Ensure the file is correctly formatted
           cat gcp-key.json
 
