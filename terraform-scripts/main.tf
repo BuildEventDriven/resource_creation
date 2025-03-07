@@ -8,14 +8,10 @@ terraform {
   }
 }
 
-output "debug_path_root" {
-  value = "DEBUG: THIS IS THE CURRENT PATH: ${path.root}"
-}
-
 provider "google" {
   project     = var.project_id
   region      = var.region
-  credentials = file("${path.module}/terraform-scripts/gcp-key.json")
+  credentials = file("/home/runner/work/resource-creation/resource_creation/terraform_scripts/gcp-key.json")
 }
 
 # Load network module (Optional: if you have a network.tf)
