@@ -20,16 +20,41 @@ module "network" {
 
 # Load broker modules
 module "broker1" {
-  source = "./instances/kafka-brokers/instance-broker1"
+  source                = "./instances/kafka-brokers/instance-broker1"
+  instance_names        = var.instance_names
+  zones                 = var.zones
+  tags                  = var.tags
+  subnet                = var.subnet  
+  instance_type         = var.instance_type  
+  image                 = var.image  
+  disk_size             = var.disk_size  
+  service_account_email = var.service_account_email  
 }
 
 module "broker2" {
-  source = "./instances/kafka-brokers/instance-broker2"
+  source                = "./instances/kafka-brokers/instance-broker2"
+  instance_names        = var.instance_names
+  zones                 = var.zones
+  tags                  = var.tags
+  subnet                = var.subnet
+  instance_type         = var.instance_type
+  image                 = var.image
+  disk_size             = var.disk_size
+  service_account_email = var.service_account_email
 }
 
 module "broker3" {
-  source = "./instances/kafka-brokers/instance-broker3"
+  source                = "./instances/kafka-brokers/instance-broker3"
+  instance_names        = var.instance_names
+  zones                 = var.zones
+  tags                  = var.tags
+  subnet                = var.subnet
+  instance_type         = var.instance_type
+  image                 = var.image
+  disk_size             = var.disk_size
+  service_account_email = var.service_account_email
 }
+
 
 # Output instance names
 output "broker_instances" {
