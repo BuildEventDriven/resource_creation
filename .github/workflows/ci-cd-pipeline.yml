@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+# permissions:
+#   actions: write
+#   contents: read
+
 jobs:
   terraform:
     runs-on: ubuntu-22.04 # Keeping it locked in to 22.04, avoiding any update issues when happens on GitHub's side.
@@ -31,7 +35,7 @@ jobs:
 
       # Google authentication flow needs to run before running terraform-apply
       - name: Run Google Cloud Authentication
-        run: gh workflow run ci-google-auth.yml --ref main
+        run: gh workflow run ci-google-auth.yml --ref main || True
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 
