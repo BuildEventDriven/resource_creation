@@ -17,7 +17,7 @@ jobs:
       - name: Authenticate with Google Cloud
         run: |
           # Decode and write the Service Account JSON key correctly
-          printf "%s" "${{ secrets.GCP_SA_KEY }}" | base64 --decode > gcp-key.json
+          printf "%s" "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
 
           # Activate authentication using the decoded key
           gcloud auth activate-service-account --key-file=gcp-key.json
@@ -30,3 +30,4 @@ jobs:
 
           # Now access the secret (this will work after authentication)
           gcloud secrets versions access latest --secret=GCP_SA_KEY --project=${{ secrets.GCP_PROJECT }} > gcp-key.json
+          
