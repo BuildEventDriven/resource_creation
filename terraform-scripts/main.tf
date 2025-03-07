@@ -8,8 +8,8 @@ terraform {
   }
 }
 
-output "debug_credentials_path" {
-  value = "${path.root}/terraform-scripts/gcp-key.json"
+output "debug_path_root" {
+  value = "DEBUG: THIS IS THE CURRENT PATH: ${path.root}"
 }
 
 provider "google" {
