@@ -1,4 +1,4 @@
-name: Google Cloud Authentication
+name: Google Cloud Authentication - Runner's Authentication
 
 on:
   push:
