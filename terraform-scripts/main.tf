@@ -11,7 +11,7 @@ terraform {
 provider "google" {
   project     = var.project_id
   region      = var.region
-  credentials = file("/home/runner/work/resource_creation/resource_creation/terraform-scripts/gcp-key.json")
+  credentials = file("/home/runner/work/${var.terraform_repo_path}/gcp-key.json")
 }
 
 # Load network module (Optional: if you have a network.tf)
