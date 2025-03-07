@@ -26,10 +26,14 @@ jobs:
         run: terraform init
         working-directory: ${{ github.workspace }}/terraform-scripts
 
+      - name: Set GitHub Authentication Token
+        run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
       # Google authentication flow needs to run before running terraform-apply
       - name: Run Google Cloud Authentication
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run ci-google-auth.yml 
-        
+
       - name: Auto apply variables
         run: terraform apply -auto-approve -var-file=terraform.auto.tfvars
         working-directory: ${{ github.workspace }}/terraform-scripts
