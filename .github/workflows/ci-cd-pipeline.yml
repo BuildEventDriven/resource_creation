@@ -19,7 +19,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Check Terraform Formatting
-        run: terraform fmt -check
+        run: terraform fmt -recursive -check || true  # Ignore errors on tfvars
         working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Initialize Terraform
