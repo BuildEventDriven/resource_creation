@@ -27,7 +27,7 @@ jobs:
         working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Auto apply variables
-        run: terraform apply -auto-approve -var-file=variables.tf
+        run: terraform apply -auto-approve -var-file=terraform.auto.tfvars
         working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Validate Terraform
