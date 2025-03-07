@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - ".github/workflows/ci-google-auth.yml"
-  workflow_dispatch: 
 
 jobs:
   setup-google-auth:
