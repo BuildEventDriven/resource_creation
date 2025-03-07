@@ -1,4 +1,3 @@
----
 name: Google Cloud Authentication - Runner's Authentication
 
 on:
@@ -16,18 +15,20 @@ jobs:
 
       - name: Authenticate with Google Cloud
         run: |
-          # Decode and write the Service Account JSON key correctly
-          printf "%s" "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
+          # Save the secret to a file properly
+          echo "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
+          
+          # Ensure the file is correctly formatted
+          cat gcp-key.json
 
-          # Activate authentication using the decoded key
+          # Authenticate with the Service Account
           gcloud auth activate-service-account --key-file=gcp-key.json
 
-          # Set the GCP project
+          # Set GCP Project
           gcloud config set project ${{ secrets.GCP_PROJECT }}
 
           # Verify authentication
           gcloud auth list
 
-          # Now access the secret (this will work after authentication)
-          gcloud secrets versions access latest --secret=GCP_SA_KEY --project=${{ secrets.GCP_PROJECT }} > gcp-key.json
-          
+          # Ensure the key file is accessible
+          ls -l gcp-key.json
