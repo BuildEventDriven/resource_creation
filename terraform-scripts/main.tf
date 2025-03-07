@@ -8,10 +8,14 @@ terraform {
   }
 }
 
+output "debug_credentials_path" {
+  value = "${path.root}/terraform-scripts/gcp-key.json"
+}
+
 provider "google" {
   project     = var.project_id
   region      = var.region
-  credentials = file("${path.module}/gcp-key.json")
+  credentials = file("${path.module}/terraform-scripts/gcp-key.json")
 }
 
 # Load network module (Optional: if you have a network.tf)
