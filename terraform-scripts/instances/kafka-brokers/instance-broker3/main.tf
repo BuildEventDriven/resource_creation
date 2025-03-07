@@ -1,7 +1,18 @@
-resource "google_compute_instance" "kafka_template" {
-  name         = var.instance_name
+# Declare variables (Required for the module)
+variable "instance_names" {}
+variable "zones" {}
+variable "tags" {}
+
+variable "instance_type" {}
+variable "image" {}
+variable "disk_size" {}
+variable "subnet" {}
+variable "service_account_email" {}
+
+resource "google_compute_instance" "kafka_broker_3" {
+  name         = var.instance_names["broker3"]
   machine_type = var.instance_type
-  zone         = "${var.region}-b"
+  zone         = var.zones["broker3"]
 
   boot_disk {
     auto_delete = true
@@ -30,7 +41,17 @@ resource "google_compute_instance" "kafka_template" {
   }
 
   metadata = {
-    startup-script = "#!/bin/bash\n\n# Check if Kafka is installed\nif systemctl list-units --type=service | grep -q kafka; then\n    echo \"Kafka is installed. Starting Kafka...\"\n    sudo systemctl start kafka\nelse\n    echo \"Kafka is NOT installed. Skipping startup.\"\nfi"
+    startup-script = <<EOF
+  #!/bin/bash
+
+  # Check if Kafka is installed
+  if systemctl list-units --type=service | grep -q kafka; then
+      echo "Kafka is installed. Starting Kafka..."
+      sudo systemctl start kafka
+  else
+      echo "Kafka is NOT installed. Skipping startup."
+  fi
+  EOF
   }
 
   scheduling {
@@ -46,5 +67,13 @@ resource "google_compute_instance" "kafka_template" {
     enable_vtpm                 = true
   }
 
-  tags = ["kafka-broker", "lb-health-check"]
+  tags = var.tags["broker3"]
+}
+
+output "instance_name" {
+value = google_compute_instance.kafka_broker_3.name
+}
+
+output "instance_ip" {
+value = google_compute_instance.kafka_broker_3.network_interface.0.network_ip
 }

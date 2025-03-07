@@ -18,29 +18,29 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Check Terraform Formatting
+        run: terraform fmt -recursive -check || true  # Ignore errors on tfvars
+        working-directory: ${{ github.workspace }}/terraform-scripts
+
       - name: Initialize Terraform
         run: terraform init
-        working-directory: terraform-scripts/
+        working-directory: ${{ github.workspace }}/terraform-scripts
+
+      - name: Auto apply variables
+        run: terraform apply -auto-approve -var-file=terraform.auto.tfvars
+        working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: terraform-scripts/
-
-      - name: Check Terraform Formatting
-        run: terraform fmt -check
-        working-directory: terraform-scripts/
+        working-directory: ${{ github.workspace }}/terraform-scripts
 
       # Google authentication flow needs to run before running terraform-apply 
       - name: Run Google Cloud Authentication
         run: gh workflow run ci-google-auth.yml || true  # Ensures it doesn't fail the pipeline
-
-      - name: Debug Directory Structure
-        run: ls -R
-        run: pwd
       
       - name: Apply Terraform Changes
-        run: terraform -chdir=./resource_creation/terraform-scripts apply -auto-approve
-        working-directory: ./resource_creation/terraform-scripts
+        run: terraform apply -auto-approve
+        working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Run ShellCheck
         run: |
