@@ -1,11 +1,11 @@
-name: Google Cloud Authentication - Runner's Authentication
+name: Google Cloud Authentication
 
 on:
   push:
     paths:
       - ".github/workflows/ci-google-auth.yml"
-  workflow_dispatch: # Allow manual triggering
-
+  workflow_dispatch: 
+    
 jobs:
   setup-google-auth:
     runs-on: ubuntu-latest
