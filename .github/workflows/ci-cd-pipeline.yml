@@ -43,6 +43,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 
+      - name: Save GCP Service Account Key - Also under terraform-scripts
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > ${{ github.workspace }}/terraform-scripts/gcp-key.json
+          gcloud auth activate-service-account --key-file=${{ github.workspace }}/terraform-scripts/gcp-key.json
+      
       - name: Debug Credential File Path
         run: |
           echo "Checking credential file location..."
