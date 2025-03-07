@@ -24,11 +24,11 @@ module "broker1" {
   instance_names        = var.instance_names
   zones                 = var.zones
   tags                  = var.tags
-  subnet                = var.subnet  
-  instance_type         = var.instance_type  
-  image                 = var.image  
-  disk_size             = var.disk_size  
-  service_account_email = var.service_account_email  
+  subnet                = var.subnet
+  instance_type         = var.instance_type
+  image                 = var.image
+  disk_size             = var.disk_size
+  service_account_email = var.service_account_email
 }
 
 module "broker2" {

@@ -80,6 +80,24 @@ pip install \
     pre-commit \
     python-terraform
 
+# Detect OS and install Terraform accordingly
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Detected macOS. Installing Terraform using Homebrew..."
+    brew tap hashicorp/tap
+    brew install hashicorp/tap/terraform
+elif command -v apt-get &> /dev/null; then
+    echo "Detected Linux. Installing Terraform using apt-get..."
+    sudo apt-get update && sudo apt-get install -y terraform
+else
+    echo "Unsupported OS. Please install Terraform manually."
+    exit 1
+fi
+
+# Ensure Terraform is in PATH
+export PCT_TFPATH="$(command -v terraform)"
+echo 'export PCT_TFPATH="$(command -v terraform)"' >> ~/.bashrc
+echo 'export PCT_TFPATH="$(command -v terraform)"' >> ~/.zshrc
+
 echo "Setting up pre-commit hooks..."
 pre-commit install
 

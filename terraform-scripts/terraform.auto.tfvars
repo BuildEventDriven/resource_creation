@@ -1,9 +1,9 @@
-region = "us-east1"
-instance_type = "n2-standard-4"
-subnet = "projects/reflected-oath-452112-d0/regions/us-east1/subnetworks/default"
-image = "projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250228"
-disk_size = 30
-service_account_email = "223009192248-compute@developer.gserviceaccount.com"
+region                = "us-east1"
+instance_type         = "n2-standard-4"
+subnet                = "projects/reflected-oath-452112-d0/regions/us-east1/subnetworks/default"
+image                 = "projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250228"
+disk_size             = 30
+service_account_email = "teraform-create-manage@buildeventdriven.iam.gserviceaccount.com"
 
 instance_names = {
   broker1 = "kafka-broker-1"
