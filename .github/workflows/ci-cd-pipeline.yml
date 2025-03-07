@@ -43,9 +43,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 
-      - name: Set Google Cloud Credentials for Terraform
-        run: echo "GOOGLE_APPLICATION_CREDENTIALS=${GITHUB_WORKSPACE}/terraform-scripts/gcp-key.json" >> $GITHUB_ENV
-      
       - name: Debug Credential File Path
         run: |
           echo "Checking credential file location..."
