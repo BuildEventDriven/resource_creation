@@ -28,8 +28,8 @@ jobs:
 
       # Google authentication flow needs to run before running terraform-apply
       - name: Run Google Cloud Authentication
-        run: gh workflow run ci-google-auth.yml || true # Ensures it doesn't fail the pipeline
-
+        run: gh workflow run ci-google-auth.yml 
+        
       - name: Auto apply variables
         run: terraform apply -auto-approve -var-file=terraform.auto.tfvars
         working-directory: ${{ github.workspace }}/terraform-scripts
