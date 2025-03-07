@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform:
-    runs-on: ubuntu-22.04 # Keeping it locked in to 22.04, avoiding any update issues when happens on GitHub's side. 
+    runs-on: ubuntu-22.04 # Keeping it locked in to 22.04, avoiding any update issues when happens on GitHub's side.
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Check Terraform Formatting
-        run: terraform fmt -recursive -check || true  # Ignore errors on tfvars
+        run: terraform fmt -recursive -check || true # Ignore errors on tfvars
         working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Initialize Terraform
@@ -34,10 +34,10 @@ jobs:
         run: terraform validate
         working-directory: ${{ github.workspace }}/terraform-scripts
 
-      # Google authentication flow needs to run before running terraform-apply 
+      # Google authentication flow needs to run before running terraform-apply
       - name: Run Google Cloud Authentication
-        run: gh workflow run ci-google-auth.yml || true  # Ensures it doesn't fail the pipeline
-      
+        run: gh workflow run ci-google-auth.yml || true # Ensures it doesn't fail the pipeline
+
       - name: Apply Terraform Changes
         run: terraform apply -auto-approve
         working-directory: ${{ github.workspace }}/terraform-scripts
@@ -71,12 +71,26 @@ jobs:
           sudo apt-get install -y google-cloud-cli
           gcloud --version
 
+      - name: Install tflint and shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tflint shellcheck
+
       - name: Run Ruff Linter
-        run: python -m ruff check .  # Runs ruff on all Python files.
+        run: python -m ruff check . # Runs ruff on all Python files.
 
       - name: Auto-Fix Formatting with Black (if running manually)
         if: github.event_name == 'pull_request'
-        run: black .  # Auto-formats code (this won't block CI)
+        run: black . # Auto-formats code (this won't block CI)
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Auto-update pre-commit hooks
+        run: pre-commit autoupdate
+
+      - name: Install pre-commit
+        run: pip install pre-commit
 
       - name: Run Tests
-        run: pytest tests/ || true  # Allows test failures but pipeline continues
+        run: pytest tests/ || true # Allows test failures but pipeline continues
