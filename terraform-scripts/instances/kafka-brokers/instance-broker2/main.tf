@@ -1,6 +1,13 @@
+# Declare variables (Required for the module)
 variable "instance_names" {}
 variable "zones" {}
 variable "tags" {}
+
+variable "instance_type" {}
+variable "image" {}
+variable "disk_size" {}
+variable "subnet" {}
+variable "service_account_email" {}
 
 resource "google_compute_instance" "kafka_broker_2" {
   name         = var.instance_names["broker2"]
