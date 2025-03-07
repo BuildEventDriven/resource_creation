@@ -30,8 +30,11 @@ jobs:
         run: terraform init
         working-directory: ${{ github.workspace }}/terraform-scripts
 
-      - name: Set GitHub Authentication Token
+      - name: Set GH Token in environment
         run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Set PAT Token in environment
+        run: echo "GH_TOKEN=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
 
       - name: Run Google Cloud Authentication
         run: gh workflow run ci-google-auth.yml --ref main
