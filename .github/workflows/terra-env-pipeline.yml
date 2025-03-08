@@ -38,33 +38,32 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y shellcheck
+          # Get the current working directory
+          CURRENT_PATH=$(pwd)
+          echo "Current working directory: $CURRENT_PATH"
+          
+          # Define the full file path for tflint.zip
+          TFLINT_ZIP_PATH="${CURRENT_PATH}/tflint-linux-amd64.zip"
+          
           # Download the latest release of tflint
           TFLINT_VERSION=$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | jq -r .tag_name)
           TFLINT_URL="https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint-linux-amd64.zip"
-
-          # Fetch the file
-          curl -LO "$TFLINT_URL"
-
-          # Fetch the current working directory
-          CURRENT_PATH=$(pwd)
-          echo "Current working directory: $CURRENT_PATH"
-
-          # Look for the zip file in the current directory
-          ZIP_FILE="$CURRENT_PATH/tflint-linux-amd64.zip"
-
+          
+          # Fetch the file and explicitly assign the path
+          curl -Lo "$TFLINT_ZIP_PATH" "$TFLINT_URL"
+          
           # Check if the file exists
-          if [ -f "$ZIP_FILE" ]; then
-            echo "Found the zip file: $ZIP_FILE"
+          if [ -f "$TFLINT_ZIP_PATH" ]; then
+            echo "Found the zip file: $TFLINT_ZIP_PATH"
           else
             echo "Error: tflint-linux-amd64.zip not found!"
             exit 1
           fi
 
           # Unzip and install
-          unzip "$ZIP_FILE"
+          unzip "$TFLINT_ZIP_PATH"
           sudo mv tflint /usr/local/bin/
-          rm "$ZIP_FILE"
-
+          rm "$TFLINT_ZIP_PATH"
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
