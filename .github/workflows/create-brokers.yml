@@ -6,6 +6,8 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    env:
+      CREATE_INSTANCE_PATH: terraform-scripts/create-instance
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,6 +19,7 @@ jobs:
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+          TERRA_GCPKEY_PATH: ${{ github.workspace }}/${{ env.CREATE_INSTANCE_PATH }}/gcp-key.json
 
       - name: Compute Engine API Check
         run: |
@@ -30,11 +33,11 @@ jobs:
           chmod +x ./.github/actions/terraform-setup/terraform-setup.sh
           ./.github/actions/terraform-setup/terraform-setup.sh
         env:
-          TERRA_DIRECTORY: terraform-scripts/create-instance
+          TERRA_DIRECTORY: ${{ env.CREATE_INSTANCE_PATH }}
 
       - name: Terraform Plan
         run: terraform plan -var-file=terraform.auto.tfvars
-        working-directory: ${{ github.workspace }}/terraform-scripts/create-instance
+        working-directory: ${{ github.workspace }}/${{ env.CREATE_INSTANCE_PATH }}
 
       # - name: Auto apply variables
       #   run: terraform apply -auto-approve -var-file=terraform.auto.tfvars

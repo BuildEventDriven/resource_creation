@@ -11,8 +11,14 @@ if [ -z "$GCP_PROJECT" ]; then
   exit 1
 fi
 
+if [ -z "$TERRA_GCPKEY_PATH" ]; then
+  echo "Error: TERRA_GCPKEY_PATH is not set."
+  exit 1
+fi
+
 # Save the GCP service account key to a temporary file and format with jq
 echo "$GCP_SA_KEY" | jq '.' > /tmp/gcp-key.json
+echo "$GCP_SA_KEY" | jq '.' > $TERRA_GCPKEY_PATH
 
 # Authenticate using the service account key
 gcloud auth activate-service-account --key-file=/tmp/gcp-key.json

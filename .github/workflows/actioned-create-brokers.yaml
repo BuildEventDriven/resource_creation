@@ -1,4 +1,4 @@
-name: Plan-Apply Kafka Brokers
+name: Actioned trigger-Plan-Apply Kafka Brokers
 
 on:
   workflow_dispatch:
