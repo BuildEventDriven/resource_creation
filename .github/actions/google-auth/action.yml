@@ -25,3 +25,4 @@ runs:
         rm /tmp/gcp-key.json
 
     - name: Google Cloud authentication successful
+      run: echo "Google Cloud authentication successful."
