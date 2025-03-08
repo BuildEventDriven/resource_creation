@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/ci-google-auth.yml"
+  workflow_dispatch:  # Manually triggered pipeline
 
 jobs:
   setup-google-auth:

@@ -6,6 +6,7 @@ on:
 jobs:
   enable-api:
     runs-on: ubuntu-latest
+    uses: ./.github/workflows/google-auth-setup.yml  # Reusing the Google authentication workflow
 
     steps:
     - name: Set up Google Cloud SDK
@@ -14,17 +15,17 @@ jobs:
         version: 'latest'
         project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your Google Cloud Project ID
 
-    - name: Authenticate to Google Cloud
-      run: |
-        chmod +x ./scripts/google-auth.sh
-        ./scripts/google-auth.sh
-      env:
-        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}  # Your Google Cloud Service Account Key
-        GCP_PROJECT: ${{ secrets.GCP_PROJECT }}  # Your Google Cloud Project ID
+    # - name: Authenticate to Google Cloud
+    #   run: |
+    #     chmod +x ./scripts/google-auth.sh
+    #     ./scripts/google-auth.sh
+    #   env:
+    #     GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}  # Your Google Cloud Service Account Key
+    #     GCP_PROJECT: ${{ secrets.GCP_PROJECT }}  # Your Google Cloud Project ID
         
-    - name: Verify Authentication
-      run: |
-        gcloud auth list
+    # - name: Verify Authentication
+    #   run: |
+    #     gcloud auth list
         
     - name: Check if Compute Engine API is enabled
       id: check_compute_api

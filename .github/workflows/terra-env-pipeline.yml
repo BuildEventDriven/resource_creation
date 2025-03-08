@@ -1,6 +1,10 @@
 name: Set Terraform Environment
 
 on:
+  # Production setting:
+  # push:
+  #   paths:
+  #     - ".github/workflows/ci-google-auth.yml"
   push:
     branches:
       - main
