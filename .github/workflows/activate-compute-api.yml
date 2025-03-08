@@ -8,6 +8,8 @@ jobs:
     env:
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: API Service Request
           uses: ./.github/actions/request-api-service
           with:
