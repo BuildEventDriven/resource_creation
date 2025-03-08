@@ -41,19 +41,25 @@ jobs:
           # Download the latest release of tflint
           TFLINT_VERSION=$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | jq -r .tag_name)
           TFLINT_URL="https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint-linux-amd64.zip"
-          
+
           # Fetch the file
           curl -LO "$TFLINT_URL"
 
-          # Check if the downloaded file has the correct name (no extra .zip)
-          if [ -f "tflint-linux-amd64.zip.zip" ]; then
-            mv "tflint-linux-amd64.zip.zip" "tflint-linux-amd64.zip"
+          # Check if the file is downloaded and has the correct name
+          echo "Downloaded files:"
+          ls -lh
+
+          # Check if the file exists and unzip it
+          TFLINT_ZIP=$(find . -type f -name "tflint-linux-amd64.zip")
+          if [ -z "$TFLINT_ZIP" ]; then
+            echo "Error: tflint-linux-amd64.zip not found!"
+            exit 1
           fi
-          
+
           # Unzip and install
-          unzip tflint-linux-amd64.zip
+          unzip "$TFLINT_ZIP"
           sudo mv tflint /usr/local/bin/
-          rm tflint-linux-amd64.zip
+          rm "$TFLINT_ZIP"
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
