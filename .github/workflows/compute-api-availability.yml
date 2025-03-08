@@ -4,10 +4,13 @@ on:
   workflow_dispatch:  # Trigger this workflow manually from CI/CD pipeline or GitHub UI
 
 jobs:
-  enable-api:
+  # Job for Google Cloud Authentication
+  google-auth:
     runs-on: ubuntu-latest
     uses: ./.github/workflows/google-auth-setup.yml  # Reusing the Google authentication workflow
 
+  enable-api:
+    runs-on: ubuntu-latest
     steps:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0
