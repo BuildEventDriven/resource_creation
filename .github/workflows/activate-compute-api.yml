@@ -13,6 +13,6 @@ jobs:
       - name: API Service Request
         uses: ./.github/actions/request-api-service
         with:
-          gcp_project_id: ${{ secrets.GCP_SA_KEY }}
+          gcp_project_id: ${{ secrets.GCP_PROJECT }}
           api_service: ${{ env.API_SERVICE_TO_ENABLE }}
           access_key: ${{ secrets.GCP_SA_KEY }}
