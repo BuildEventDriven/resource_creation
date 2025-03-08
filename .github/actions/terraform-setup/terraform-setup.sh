@@ -31,8 +31,8 @@ sudo mv terraform /usr/local/bin/
 echo "Initializing Terraform..."
 terraform init -input=false -backend=false -upgrade \
   -var-file=terraform.auto.tfvars \
-  working-directory="${GITHUB_WORKSPACE}/terraform-scripts/${TERRA_DIRECTORY}"
+  -chdir="${GITHUB_WORKSPACE}/terraform-scripts/${TERRA_DIRECTORY}"
 
 echo "Validating Terraform configuration..."
 terraform validate \
-  working-directory="${GITHUB_WORKSPACE}/terraform-scripts/${TERRA_DIRECTORY}"
+  -chdir="${GITHUB_WORKSPACE}/terraform-scripts/${TERRA_DIRECTORY}"
