@@ -1,4 +1,4 @@
-name: Availability Check-Compute Engine API
+name: Availability Check - Compute Engine API
 
 on:
   workflow_dispatch:  # Trigger this workflow manually from CI/CD pipeline or GitHub UI
@@ -14,12 +14,24 @@ jobs:
         version: 'latest'
         project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your Google Cloud Project ID
 
+    - name: Authenticate to Google Cloud
+      run: |
+        chmod +x ./scripts/google-auth.sh
+        ./scripts/google-auth.sh
+      env:
+        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}  # Your Google Cloud Service Account Key
+        GCP_PROJECT: ${{ secrets.GCP_PROJECT }}  # Your Google Cloud Project ID
+        
+    - name: Verify Authentication
+      run: |
+        gcloud auth list
+        
     - name: Check if Compute Engine API is enabled
       id: check_compute_api
       run: |
         ENABLED=$(gcloud services list --enabled --filter="compute.googleapis.com" --format="value(NAME)")
         if [ "$ENABLED" == "compute.googleapis.com" ]; then
-          echo "Compute Engine API is already enabled. Skipping authentication and enabling."
+          echo "Compute Engine API is already enabled."
           echo "::set-output name=enable_compute_api::false"
         else
           echo "Compute Engine API is not enabled."
