@@ -19,7 +19,7 @@ jobs:
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-          TERRA_GCPKEY_PATH: ${{ github.workspace }}/${{ env.CREATE_INSTANCE_PATH }}/gcp-key.json
+          # TERRA_GCPKEY_PATH: ${{ github.workspace }}/${{ env.CREATE_INSTANCE_PATH }}/gcp-key.json
 
       - name: Compute Engine API Check
         run: |
