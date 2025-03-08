@@ -1,0 +1,41 @@
+name: Plan-Apply Kafka Brokers
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Google Cloud Authentication
+        run: |
+          chmod +x ./.github/actions/google-auth/google-auth.sh
+          ./.github/actions/google-auth/google-auth.sh
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+
+      - name: Compute Engine API Check
+        run: |
+          chmod +x ./.github/actions/compute-api-enable/compute-api-enable.sh
+          ./.github/actions/compute-api-enable/compute-api-enable.sh
+        env:
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+
+      - name: Terraform Setup
+        run: |
+          chmod +x ./.github/actions/terraform-setup/terraform-setup.sh
+          ./.github/actions/terraform-setup/terraform-setup.sh
+        env:
+          TERRA_DIRECTORY: terraform-scripts/create-instance
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=terraform.auto.tfvars
+        working-directory: ${{ github.workspace }}/terraform-scripts/create-instance
+
+      # - name: Auto apply variables
+      #   run: terraform apply -auto-approve -var-file=terraform.auto.tfvars
+      #   working-directory: ${{ github.workspace }}/terraform-scripts
