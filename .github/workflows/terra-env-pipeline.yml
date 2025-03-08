@@ -40,7 +40,17 @@ jobs:
           sudo apt-get install -y shellcheck
           # Download the latest release of tflint
           TFLINT_VERSION=$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | jq -r .tag_name)
-          curl -LO "https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint-linux-amd64.zip"
+          TFLINT_URL="https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint-linux-amd64.zip"
+          
+          # Fetch the file
+          curl -LO "$TFLINT_URL"
+
+          # Check if the downloaded file has the correct name (no extra .zip)
+          if [ -f "tflint-linux-amd64.zip.zip" ]; then
+            mv "tflint-linux-amd64.zip.zip" "tflint-linux-amd64.zip"
+          fi
+          
+          # Unzip and install
           unzip tflint-linux-amd64.zip
           sudo mv tflint /usr/local/bin/
           rm tflint-linux-amd64.zip
