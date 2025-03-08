@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Ensure that the Google Cloud Project ID is provided
-if [ -z "$GCP_PROJECT_ID" ]; then
-  echo "Error: GCP_PROJECT_ID is not set."
+if [ -z "$GCP_PROJECT" ]; then
+  echo "Error: GCP_PROJECT is not set."
   exit 1
 fi
 
@@ -20,7 +20,7 @@ fi
 # If the API is not enabled, enable it
 if [ "$ENABLE_COMPUTE_API" == "true" ]; then
   echo "Enabling Compute Engine API..."
-  gcloud services enable compute.googleapis.com --project="$GCP_PROJECT_ID"
+  gcloud services enable compute.googleapis.com --project="$GCP_PROJECT"
   echo "Compute Engine API enabled."
 fi
 
