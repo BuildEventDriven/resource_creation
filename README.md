@@ -53,6 +53,10 @@ terraform-project/
 │   ├── workflows/
 │   │   ├── create-instance.yml
 │   │   └── delete-instance.yml
+│   ├── actions/
+│   │   └── terraform-setup/
+│   │       ├── action.yml
+│   │       └── script.sh
 ```
 ---
 
