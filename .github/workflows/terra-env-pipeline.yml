@@ -47,16 +47,16 @@ jobs:
       #     sudo apt-get install -y shellcheck
       #     shellcheck infra/*.sh scripts/*.sh
 
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ${{ github.workspace }}/terraform-scripts
+
       - name: Check Terraform Formatting
         run: terraform fmt -recursive -check || true # Ignore errors on tfvars
         working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: ${{ github.workspace }}/terraform-scripts
-
-      - name: Initialize Terraform
-        run: terraform init
         working-directory: ${{ github.workspace }}/terraform-scripts
 
       - name: Set PAT Token in environment
