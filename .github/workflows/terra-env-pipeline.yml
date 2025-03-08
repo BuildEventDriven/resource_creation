@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-      
+
 permissions:
   actions: write
   contents: read
@@ -38,8 +38,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y shellcheck
-          # Install tflint using pre-built binary
-          curl -LO https://github.com/terraform-linters/tflint/releases/download/v0.34.0/tflint-linux-amd64.zip
+          # Download the latest release of tflint
+          TFLINT_VERSION=$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | jq -r .tag_name)
+          curl -LO "https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint-linux-amd64.zip"
           unzip tflint-linux-amd64.zip
           sudo mv tflint /usr/local/bin/
           rm tflint-linux-amd64.zip
