@@ -9,8 +9,8 @@ jobs:
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
     steps:
       - name: API Service Request
-            uses: ./.github/actions/request-api-service
-            with:
-              gcp_project_id: ${{ inputs.gcp_project_id }}
-              api_service: ${{ inputs.api_service }}
-              access_key: ${{ secrets.GCP_SA_KEY }}
+          uses: ./.github/actions/request-api-service
+          with:
+            gcp_project_id: ${{ inputs.gcp_project_id }}
+            api_service: ${{ inputs.api_service }}
+            access_key: ${{ secrets.GCP_SA_KEY }}
