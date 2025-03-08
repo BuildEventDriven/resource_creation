@@ -1,0 +1,28 @@
+name: Google Cloud Authentication
+description: "Authenticate with Google Cloud using a service account key."
+inputs:
+  gcp_sa_key:
+    description: "The Google Cloud service account key in JSON format."
+    required: true
+  gcp_project:
+    description: "The Google Cloud project ID."
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Save GCP Service Account Key (Properly)
+      run: |
+        echo "${{ inputs.gcp_sa_key }}" | jq '.' > /tmp/gcp-key.json
+
+    - name: Authenticate with Google Cloud
+      run: |
+        gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+        gcloud config set project ${{ inputs.gcp_project }}
+        gcloud auth list
+
+    - name: Clean up
+      run: |
+        rm /tmp/gcp-key.json
