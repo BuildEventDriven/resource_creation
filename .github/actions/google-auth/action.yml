@@ -14,10 +14,12 @@ runs:
       uses: actions/checkout@v3
       
     - name: Save GCP Service Account Key (Properly)
+      shell: bash
       run: |
         echo "${{ inputs.gcp_sa_key }}" | jq '.' > /tmp/gcp-key.json
 
     - name: Authenticate with Google Cloud
+      shell: bash
       run: |
         gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
         gcloud config set project ${{ inputs.gcp_project }}
