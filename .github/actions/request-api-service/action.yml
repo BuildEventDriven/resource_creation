@@ -13,6 +13,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: START
+      run: echo "------ENTERED REQUEST API SERVICE------"
+
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
@@ -20,13 +23,16 @@ runs:
         project_id: ${{ inputs.gcp_project_id }}
 
     - name: Google Cloud Authentication
-      uses: ./.github/actions/google-auth
+      uses: .github/actions/google-auth
       with:
         GCP_SA_KEY: ${{ inputs.access_key }}
         GCP_PROJECT: ${{ inputs.gcp_project_id }}
 
     - name: Enable API Service
-      uses: ./.github/actions/enable-api-service
+      uses: .github/actions/enable-api-service
       with:
         gcp_project_id: ${{ inputs.gcp_project_id }}
         api_service: ${{ inputs.api_service }}
+
+    - name: END
+      run: echo "------EXIT REQUEST API SERVICE------"

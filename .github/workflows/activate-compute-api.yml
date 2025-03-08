@@ -10,9 +10,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+    - name: START
+      run: echo "------ENTERED ACTIVATE COMPUTE API------"
+
       - name: API Service Request
         uses: ./.github/actions/request-api-service
         with:
           gcp_project_id: ${{ secrets.GCP_PROJECT }}
           api_service: ${{ env.API_SERVICE_TO_ENABLE }}
           access_key: ${{ secrets.GCP_SA_KEY }}
+
+    - name: END
+      run: echo "------EXIT ACTIVATE COMPUTE API------"

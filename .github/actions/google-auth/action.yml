@@ -10,6 +10,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: START
+      run: echo "------ENTERED CLOUD AUTHENTICATION------"
+
     - name: Save GCP Service Account Key (Properly)
       run: |
         echo "${{ inputs.gcp_sa_key }}" | jq '.' > /tmp/gcp-key.json
@@ -24,5 +27,5 @@ runs:
       run: |
         rm /tmp/gcp-key.json
 
-    - name: Google Cloud authentication successful
-      run: echo "Google Cloud authentication successful."
+    - name: END
+      run: echo "------ EXIT with Google Cloud authentication successful------"
