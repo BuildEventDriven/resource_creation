@@ -37,5 +37,23 @@ This repository includes a GitHub Actions workflow that:
 - 🚀 Checks Shell Scripts (ShellCheck)
 - 🚀 Runs health-check scripts
 
+Example workflow-action-flow:
+```
+terraform-project/
+├── terraform-scripts/
+│   ├── create-instance/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   ├── delete-instance/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+├── .github/
+│   ├── workflows/
+│   │   ├── create-instance.yml
+│   │   └── delete-instance.yml
+```
 ---
+
 **Maintainer:** Karan Patel
