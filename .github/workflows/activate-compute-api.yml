@@ -1,4 +1,4 @@
-name: Trigger Enable API Service Workflow
+name: Activate Compute API Service
 
 on:
   workflow_dispatch:
@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Trigger the Enable API Service Workflow
-      uses: peter-evans/workflow-dispatch@v1
-      with:
-        workflow: enable-api-service.yml  # Name of the workflow to trigger
-        ref: refs/heads/main  # You can trigger from a specific branch (e.g., main)
-        inputs:
-          gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}  # Provide the GCP Project ID as an input
-          api_service: "compute.googleapis.com"  # Provide the API service you want to check and enable
-          access_key: ${{ secrets.GCP_PROJECT_ID }}
+      - name: Trigger the Enable API Service Workflow
+        uses: peter-evans/workflow-dispatch@v1
+        with:
+          workflow: enable-api-service.yml  # The target workflow to trigger
+          ref: refs/heads/main  # Specify the branch (e.g., main)
+          inputs:
+            gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}  # GCP Project ID
+            api_service: "compute.googleapis.com"  # API service to be enabled
+            access_key: ${{ secrets.GCP_SA_KEY }}  # Service account key from secrets

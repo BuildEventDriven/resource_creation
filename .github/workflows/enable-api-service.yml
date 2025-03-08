@@ -18,20 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-      with:
-        service_account_key: ${{ inputs.access_key }}
-        project_id: ${{ inputs.gcp_project_id }}
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ inputs.access_key }}
+          project_id: ${{ inputs.gcp_project_id }}
 
-    - name: Google Cloud Authentication
-      uses: ./.github/actions/google-auth
-      with:
-        GCP_SA_KEY: ${{ inputs.access_key }}
-        GCP_PROJECT: ${{ inputs.gcp_project_id }}
+      - name: Google Cloud Authentication
+        uses: ./.github/actions/google-auth
+        with:
+          GCP_SA_KEY: ${{ inputs.access_key }}
+          GCP_PROJECT: ${{ inputs.gcp_project_id }}
 
-    - name: Enable API Service
-      uses: ./.github/actions/enable-api-service  # Reference the composite action
-      with:
-        gcp_project_id: ${{ inputs.gcp_project_id }}
-        api_service: ${{ inputs.api_service }}
+      - name: Enable API Service
+        uses: ./.github/actions/enable-api-service  # Reference the composite action
+        with:
+          gcp_project_id: ${{ inputs.gcp_project_id }}
+          api_service: ${{ inputs.api_service }}
