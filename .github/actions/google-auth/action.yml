@@ -26,5 +26,6 @@ runs:
         gcloud auth list
 
     - name: Clean up
+      shell: bash
       run: |
         rm /tmp/gcp-key.json
