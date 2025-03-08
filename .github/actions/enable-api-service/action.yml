@@ -15,6 +15,7 @@ runs:
       uses: actions/checkout@v3
 
     - name: Check if specified API service is enabled
+      shell: bash
       id: check_api_service
       run: |
         # Ensure the API service is provided
@@ -35,6 +36,7 @@ runs:
         fi
 
     - name: Enable the specified API service
+      shell: bash
       if: steps.check_api_service.outputs.enable_api_service == 'true'
       run: |
         echo "Enabling ${{ inputs.api_service }} API..."
@@ -42,6 +44,7 @@ runs:
         echo "${{ inputs.api_service }} API enabled."
 
     - name: Verify specified API service is enabled
+      shell: bash
       run: |
         gcloud services list --enabled --filter="${{ inputs.api_service }}" --format="value(NAME)"
         echo "Verified ${{ inputs.api_service }} is enabled."
