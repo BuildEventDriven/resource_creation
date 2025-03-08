@@ -14,9 +14,6 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: START
-      run: echo "------ENTERED ENABLE API SERVICE------"
-
     - name: Check if specified API service is enabled
       id: check_api_service
       run: |
@@ -48,6 +45,3 @@ runs:
       run: |
         gcloud services list --enabled --filter="${{ inputs.api_service }}" --format="value(NAME)"
         echo "Verified ${{ inputs.api_service }} is enabled."
-
-    - name: END
-      run: echo "------EXIT ENABLE API SERVICE------"

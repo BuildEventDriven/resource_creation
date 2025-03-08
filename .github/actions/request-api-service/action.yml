@@ -13,9 +13,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: START
-      run: echo "------ENTERED REQUEST API SERVICE------"
-
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
@@ -33,6 +33,3 @@ runs:
       with:
         gcp_project_id: ${{ inputs.gcp_project_id }}
         api_service: ${{ inputs.api_service }}
-
-    - name: END
-      run: echo "------EXIT REQUEST API SERVICE------"
