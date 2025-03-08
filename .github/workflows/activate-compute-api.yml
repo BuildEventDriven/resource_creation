@@ -11,9 +11,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check and format GCP Service Account Key
+        shell: bash
+        run: |
+          # First check if the key is valid JSON
+          echo "${{ secrets.GCP_SA_KEY }}" | jq empty
+          if [ $? -eq 0 ]; then
+            # If the JSON is valid, format it and store in JSON_KEY
+            echo "${{ secrets.GCP_SA_KEY }}" | jq '.' > /tmp/gcp-key.json
+            export JSON_KEY=$(cat /tmp/gcp-key.json)
+          else
+            echo "The GCP Service Account Key is not a valid JSON."
+            exit 1
+          fi
+
       - name: API Service Request
         uses: buildeventdriven/resource_creation/.github/actions/request-api-service@main
         with:
           gcp_project_id: ${{ secrets.GCP_PROJECT }}
           api_service: ${{ env.API_SERVICE_TO_ENABLE }}
-          access_key: ${{ secrets.GCP_SA_KEY }}
+          access_key: ${{ env.JSON_KEY }}
