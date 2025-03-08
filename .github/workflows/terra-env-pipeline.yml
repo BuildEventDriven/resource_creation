@@ -45,21 +45,26 @@ jobs:
           # Fetch the file
           curl -LO "$TFLINT_URL"
 
-          # Check if the file is downloaded and has the correct name
-          echo "Downloaded files:"
-          ls -lh
+          # Fetch the current working directory
+          CURRENT_PATH=$(pwd)
+          echo "Current working directory: $CURRENT_PATH"
 
-          # Check if the file exists and unzip it
-          TFLINT_ZIP=$(find . -type f -name "tflint-linux-amd64.zip")
-          if [ -z "$TFLINT_ZIP" ]; then
+          # Look for the zip file in the current directory
+          ZIP_FILE="$CURRENT_PATH/tflint-linux-amd64.zip"
+
+          # Check if the file exists
+          if [ -f "$ZIP_FILE" ]; then
+            echo "Found the zip file: $ZIP_FILE"
+          else
             echo "Error: tflint-linux-amd64.zip not found!"
             exit 1
           fi
 
           # Unzip and install
-          unzip "$TFLINT_ZIP"
+          unzip "$ZIP_FILE"
           sudo mv tflint /usr/local/bin/
-          rm "$TFLINT_ZIP"
+          rm "$ZIP_FILE"
+
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
