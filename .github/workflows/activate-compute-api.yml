@@ -15,7 +15,7 @@ jobs:
         run: echo "------ENTERED ACTIVATE COMPUTE API------"
 
       - name: API Service Request
-        uses: ./.github/actions/request-api-service
+        uses: .github/actions/request-api-service
         with:
           gcp_project_id: ${{ secrets.GCP_PROJECT }}
           api_service: ${{ env.API_SERVICE_TO_ENABLE }}
