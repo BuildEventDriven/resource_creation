@@ -34,7 +34,12 @@ jobs:
       - name: Install tflint and shellcheck
         run: |
           sudo apt-get update
-          sudo apt-get install -y tflint shellcheck
+          sudo apt-get install -y shellcheck
+          # Install tflint using pre-built binary
+          curl -LO https://github.com/terraform-linters/tflint/releases/download/v0.34.0/tflint-linux-amd64.zip
+          unzip tflint-linux-amd64.zip
+          sudo mv tflint /usr/local/bin/
+          rm tflint-linux-amd64.zip
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
