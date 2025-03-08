@@ -1,0 +1,15 @@
+name: Write GCP Key to desired directory
+description: "Write/make-copy of a GCP Key to desired directory"
+inputs:
+  gcp_sa_key:
+    description: "The Google Cloud service account key in JSON format."
+    required: true
+  terra_gcpkey_path:
+    description: "The path where the GCP service account key should be saved."
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Save GCP Service Account Key (Properly)
+      run: |
+        echo "${{ inputs.gcp_sa_key }}" | jq '.' > ${{ inputs.terra_gcpkey_path }}
