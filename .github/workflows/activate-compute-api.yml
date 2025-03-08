@@ -5,7 +5,8 @@ on:
 jobs:
   trigger-enable-api-service:
     runs-on: ubuntu-latest
-    
+    env:
+      API_SERVICE_TO_ENABLE: "compute.googleapis.com"
     steps:
       - name: Trigger the Enable API Service Workflow
         uses: peter-evans/workflow-dispatch@v1
@@ -14,5 +15,5 @@ jobs:
           ref: refs/heads/main  # Specify the branch (e.g., main)
           inputs:
             gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}  # GCP Project ID
-            api_service: "compute.googleapis.com"  # API service to be enabled
+            api_service: ${{ env.API_SERVICE_TO_ENABLE }} # API service to be enabled
             access_key: ${{ secrets.GCP_SA_KEY }}  # Service account key from secrets
