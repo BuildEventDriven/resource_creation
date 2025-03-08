@@ -9,43 +9,43 @@ jobs:
     uses: ./.github/workflows/google-auth-setup.yml  # Reusing the Google authentication workflow
 
     steps:
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0.3.0
-      with:
-        version: 'latest'
-        project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your Google Cloud Project ID
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          version: 'latest'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your Google Cloud Project ID
 
-    # - name: Authenticate to Google Cloud
-    #   run: |
-    #     chmod +x ./scripts/google-auth.sh
-    #     ./scripts/google-auth.sh
-    #   env:
-    #     GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}  # Your Google Cloud Service Account Key
-    #     GCP_PROJECT: ${{ secrets.GCP_PROJECT }}  # Your Google Cloud Project ID
-        
-    # - name: Verify Authentication
-    #   run: |
-    #     gcloud auth list
-        
-    - name: Check if Compute Engine API is enabled
-      id: check_compute_api
-      run: |
-        ENABLED=$(gcloud services list --enabled --filter="compute.googleapis.com" --format="value(NAME)")
-        if [ "$ENABLED" == "compute.googleapis.com" ]; then
-          echo "Compute Engine API is already enabled."
-          echo "::set-output name=enable_compute_api::false"
-        else
-          echo "Compute Engine API is not enabled."
-          echo "::set-output name=enable_compute_api::true"
-        fi
+      # - name: Authenticate to Google Cloud
+      #   run: |
+      #     chmod +x ./scripts/google-auth.sh
+      #     ./scripts/google-auth.sh
+      #   env:
+      #     GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}  # Your Google Cloud Service Account Key
+      #     GCP_PROJECT: ${{ secrets.GCP_PROJECT }}  # Your Google Cloud Project ID
+          
+      # - name: Verify Authentication
+      #   run: |
+      #     gcloud auth list
+          
+      - name: Check if Compute Engine API is enabled
+        id: check_compute_api
+        run: |
+          ENABLED=$(gcloud services list --enabled --filter="compute.googleapis.com" --format="value(NAME)")
+          if [ "$ENABLED" == "compute.googleapis.com" ]; then
+            echo "Compute Engine API is already enabled."
+            echo "::set-output name=enable_compute_api::false"
+          else
+            echo "Compute Engine API is not enabled."
+            echo "::set-output name=enable_compute_api::true"
+          fi
 
-    - name: Enable Compute Engine API
-      if: steps.check_compute_api.outputs.enable_compute_api == 'true'
-      run: |
-        gcloud services enable compute.googleapis.com --project=${{ secrets.GCP_PROJECT_ID }}
-        echo "Compute Engine API enabled."
+      - name: Enable Compute Engine API
+        if: steps.check_compute_api.outputs.enable_compute_api == 'true'
+        run: |
+          gcloud services enable compute.googleapis.com --project=${{ secrets.GCP_PROJECT_ID }}
+          echo "Compute Engine API enabled."
 
-    - name: Verify Compute Engine API is enabled
-      run: |
-        gcloud services list --enabled --filter="compute.googleapis.com" --format="value(NAME)"
-        echo "Verified Compute Engine API is enabled."
+      - name: Verify Compute Engine API is enabled
+        run: |
+          gcloud services list --enabled --filter="compute.googleapis.com" --format="value(NAME)"
+          echo "Verified Compute Engine API is enabled."
