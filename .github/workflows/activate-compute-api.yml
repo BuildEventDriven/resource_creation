@@ -23,6 +23,6 @@ jobs:
           gh workflow run request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
-            --field access_key="${{ secrets.GCP_SA_KEY }}"
+            --field access_key=${{ secrets.GCP_SA_KEY }}
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
