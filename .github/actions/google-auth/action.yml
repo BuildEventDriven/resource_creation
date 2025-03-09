@@ -20,20 +20,14 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-   - name: Download GCP Service Account Key Artifact
-      uses: actions/download-artifact@v3
+    - name: Download GCP Service Account Key Artifact
+      uses: actions/download-artifact@v4
       with:
         name: create-instance-gcp-key
 
-    - name: Print the downloaded file's full path
-      run: |
-        # Find the downloaded artifact directory
-        artifact_dir=$(find . -name 'gcp-key.json' -type f)
-        echo "The downloaded GCP service account key is located at: $artifact_dir"
-    
     - name: Authenticate with GCP
       run: |
-        gcloud auth activate-service-account --key-file=gcp-key.json
+        gcloud auth activate-service-account --key-file=./gcp-key.json
 
     # - name: Authenticate with Google Cloud
     #   shell: bash
