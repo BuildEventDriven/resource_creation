@@ -7,9 +7,9 @@ inputs:
   gcp_project_id:
     description: "The Google Cloud project ID."
     required: true
-  gcp_key_file_path:
-    escription: 'Path to pre-written gcp key, available for use.'
-    required: true
+  # gcp_key_file_path:
+  #   escription: 'Path to pre-written gcp key, available for use.'
+  #   required: true
 
 runs:
   using: "composite"
@@ -35,7 +35,8 @@ runs:
     - name: Authenticate with Google Cloud
       shell: bash
       run: |
-        gcloud auth activate-service-account --key-file=${{ inputs.gcp_key_file_path }}
+        gcloud auth activate-service-account --key-file=./gcp-key.json
+    # ${{ inputs.gcp_key_file_path }}
         gcloud config set project ${{ inputs.gcp_project_id }}
         gcloud auth list
 

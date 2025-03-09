@@ -12,9 +12,9 @@ on:
       access_key:
         description: 'GCP Service Account Key'
         required: true
-      gcp_key_file_path:
-        escription: 'Path to pre-written gcp key, available for use.'
-        required: true
+      # gcp_key_file_path:
+      #   escription: 'Path to pre-written gcp key, available for use.'
+      #   required: true
 
 jobs:
   enable-api-service:
