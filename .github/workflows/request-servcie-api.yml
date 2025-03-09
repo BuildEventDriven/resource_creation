@@ -1,0 +1,39 @@
+name: Enable Google Cloud API Service
+
+on:
+  workflow_dispatch:
+    inputs:
+      gcp_project_id:
+        description: 'The Google Cloud project ID'
+        required: true
+      api_service:
+        description: 'The Google Cloud API service to enable (e.g., compute.googleapis.com)'
+        required: true
+      access_key:
+        description: 'GCP Service Account Key'
+        required: true
+
+jobs:
+  enable-api-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ inputs.access_key }}
+          project_id: ${{ inputs.gcp_project_id }}
+
+      - name: Google Cloud Authentication
+        uses: buildeventdriven/resource_creation/.github/actions/google-auth@main
+        with:
+          access_key: ${{ inputs.access_key }}
+          gcp_project_id: ${{ inputs.gcp_project_id }}
+
+      - name: Enable API Service
+        uses: buildeventdriven/resource_creation/.github/actions/enable-api-service@main
+        with:
+          gcp_project_id: ${{ inputs.gcp_project_id }}
+          api_service: ${{ inputs.api_service }}
