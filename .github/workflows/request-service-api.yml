@@ -12,6 +12,9 @@ on:
       access_key:
         description: 'GCP Service Account Key'
         required: true
+      gcp_key_file_path:
+        escription: 'Path to pre-written gcp key, available for use.'
+        required: true
 
 jobs:
   enable-api-service:
@@ -31,6 +34,7 @@ jobs:
         with:
           access_key: ${{ inputs.access_key }}
           gcp_project_id: ${{ inputs.gcp_project_id }}
+          gcp_key_file_path: ${{ inputs.gcp_key_file_path }}
 
       - name: Enable API Service
         uses: buildeventdriven/resource_creation/.github/actions/enable-api-service@main
