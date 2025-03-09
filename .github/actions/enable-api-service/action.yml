@@ -1,4 +1,4 @@
-name: Availability Check - Google Cloud API Service
+name: Enabling-Requested API Service
 description: "Check if the specified Google Cloud API service is enabled and enable it if not."
 inputs:
   gcp_project_id:
@@ -16,35 +16,44 @@ runs:
 
     - name: Check if specified API service is enabled
       shell: bash
-      id: check_api_service
       run: |
-        # Ensure the API service is provided
-        if [ -z "${{ inputs.api_service }}" ]; then
-          echo "Error: API_SERVICE is not set.";
-          exit 1;
-        fi
-        
-        # Check if the specified API service is enabled
-        ENABLED=$(gcloud services list --enabled --filter="${{ inputs.api_service }}" --format="value(NAME)")
-        
-        if [ "$ENABLED" == "${{ inputs.api_service }}" ]; then
-          echo "${{ inputs.api_service }} is already enabled."
-          echo "::set-output name=enable_api_service::false"
-        else
-          echo "${{ inputs.api_service }} is not enabled."
-          echo "::set-output name=enable_api_service::true"
-        fi
+        chmod +x .github/scripts/enable-service-api.sh
+        .github/scripts/enable-service-api.sh
+      env:
+        gcp_project_id: ${{ inputs.gcp_project_id }}
+        api_service: ${{ inputs.api_service }}
 
-    - name: Enable the specified API service
-      shell: bash
-      if: steps.check_api_service.outputs.enable_api_service == 'true'
-      run: |
-        echo "Enabling ${{ inputs.api_service }} API..."
-        gcloud services enable ${{ inputs.api_service }} --project=${{ inputs.gcp_project_id }}
-        echo "${{ inputs.api_service }} API enabled."
+    # - name: Check if specified API service is enabled
+    #   shell: bash
+    #   id: check_api_service
+    #   run: |
+    #     # Ensure the API service is provided
+    #     if [ -z "${{ inputs.api_service }}" ]; then
+    #       echo "Error: API_SERVICE is not set.";
+    #       exit 1;
+    #     fi
+        
+    #     # Check if the specified API service is enabled
+    #     ENABLED=$(gcloud services list --enabled --filter="${{ inputs.api_service }}" --format="value(NAME)")
+        
+    #     if [ "$ENABLED" == "${{ inputs.api_service }}" ]; then
+    #       echo "${{ inputs.api_service }} is already enabled."
+    #       echo "::set-output name=enable_api_service::false"
+    #     else
+    #       echo "${{ inputs.api_service }} is not enabled."
+    #       echo "::set-output name=enable_api_service::true"
+    #     fi
 
-    - name: Verify specified API service is enabled
-      shell: bash
-      run: |
-        gcloud services list --enabled --filter="${{ inputs.api_service }}" --format="value(NAME)"
-        echo "Verified ${{ inputs.api_service }} is enabled."
+    # - name: Enable the specified API service
+    #   shell: bash
+    #   if: steps.check_api_service.outputs.enable_api_service == 'true'
+    #   run: |
+    #     echo "Enabling ${{ inputs.api_service }} API..."
+    #     gcloud services enable ${{ inputs.api_service }} --project=${{ inputs.gcp_project_id }}
+    #     echo "${{ inputs.api_service }} API enabled."
+
+    # - name: Verify specified API service is enabled
+    #   shell: bash
+    #   run: |
+    #     gcloud services list --enabled --filter="${{ inputs.api_service }}" --format="value(NAME)"
+    #     echo "Verified ${{ inputs.api_service }} is enabled."
