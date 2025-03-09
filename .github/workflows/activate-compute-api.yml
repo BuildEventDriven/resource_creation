@@ -19,6 +19,6 @@ jobs:
       #     access_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: Trigger Enable API Service Workflow
-        run: gh workflow run request-service-api.yml --ref main --inputs gcp_project_id=${{ secrets.GCP_PROJECT }} api_service=${{ env.API_SERVICE_TO_ENABLE }} access_key=${{ secrets.GCP_SA_KEY }}
+        run: gh workflow run request-service-api.yml --ref main --field gcp_project_id=${{ secrets.GCP_PROJECT }} --field api_service=${{ env.API_SERVICE_TO_ENABLE }} --field access_key=${{ secrets.GCP_SA_KEY }}
         env:
           GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
