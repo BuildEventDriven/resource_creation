@@ -11,6 +11,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
+      - name: Check Type of GCP Service Account Key
+        run: |
+          echo "Type of GCP_SA_KEY: $(echo '${{ secrets.GCP_SA_KEY }}' | file -)"
+
     # Make sure you use appropriate account key. And, not use one key in every project/use-case.  
       - name: Write GCP Service Account Key to a json file
         shell: bash
