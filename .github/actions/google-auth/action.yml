@@ -26,6 +26,7 @@ runs:
         name: create-instance-gcp-key
 
     - name: Authenticate with GCP
+      shell: bash
       run: |
         gcloud auth activate-service-account --key-file=./gcp-key.json
 
