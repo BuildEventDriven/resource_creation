@@ -6,21 +6,29 @@ jobs:
   trigger-enable-api-service:
     runs-on: ubuntu-latest
     env:
-      path_list: "/tmp/gcp-key.json"
-      authenticate_at_path: "/tmp/gcp-key.json"
+      LIST_OF_GCP_PATHS: "/tmp/gcp-key.json"
+      AUTHENTICATE_GCP_WITH_PATH: "/tmp/gcp-key.json"
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
+
+      - name: Encode GCP Service Account Key
+        shell: bash
+        id: encode_key
+        run: |
+          ENCODED_KEY=$(echo "${{ secrets.GCP_SA_KEY }}" | base64)
+          echo "ENCODED_KEY=$ENCODED_KEY" >> $GITHUB_ENV  # Save to environment variable for later steps
+
       - name: Trigger Enable API Service Workflow
         run: |
+          ENCODED_KEY=$(echo "${{ secrets.GCP_SA_KEY }}" | base64)
           gh workflow run request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
-            --field access_key="${{ secrets.GCP_SA_KEY }}" \
-            --field path_list="${{ env.path_list }}" \
-            --field authenticate_at_path="${{ env.authenticate_at_path }}"
+            --field access_key="${{ env.ENCODED_KEY }}" \
+            --field path_list="${{ env.LIST_OF_GCP_PATHS }}" \
+            --field authenticate_at_path="${{ env.AUTHENTICATE_GCP_WITH_PATH }}"
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 
