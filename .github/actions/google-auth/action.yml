@@ -14,13 +14,6 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Check and format GCP Service Account Key
-      shell: bash
-      run: |
-        ESCAPED_KEY=$(echo "${{ inputs.access_key }}" | sed ':a;N;$!ba;s/\n/\\n/g')
-        FORMATTED_JSON=$(echo "{\"key\": \"$ESCAPED_KEY\"}" | jq '.')
-        echo "$FORMATTED_JSON" | jq '.' > /tmp/gcp-key.json
-
     - name: Authenticate with Google Cloud
       shell: bash
       run: |
