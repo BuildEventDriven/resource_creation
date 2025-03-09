@@ -1,7 +1,7 @@
 name: Google Cloud Authentication
 description: "Authenticate with Google Cloud using a service account key."
 inputs:
-  access_key_name:
+  access_key:
     description: "The Google Cloud service account key in JSON format."
     required: true
   gcp_project_id:
@@ -23,7 +23,7 @@ runs:
     - name: Check and format GCP Service Account Key
       shell: bash
       run: |
-        echo '${{ secrets[inputs.access_key_name] }}' | jq '.' > /tmp/gcp-key.json
+        echo '${{ inputs.access_key }}' | jq '.' > /tmp/gcp-key.json
 
 
     - name: Authenticate with Google Cloud
