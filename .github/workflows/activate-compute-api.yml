@@ -19,8 +19,8 @@ jobs:
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
             --field access_key="${{ secrets.GCP_SA_KEY }}" \
-            --field path_list="${{ env.path_list. }}" \
-            --field authenticate_at_path="${{ env.authenticate_at_path. }}"
+            --field path_list="${{ env.path_list }}" \
+            --field authenticate_at_path="${{ env.authenticate_at_path }}"
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 
