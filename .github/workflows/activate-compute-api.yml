@@ -6,6 +6,8 @@ jobs:
   trigger-enable-api-service:
     runs-on: ubuntu-latest
     env:
+      # When you assign a list Make sure here are no spaces before or after comma , e.g. "/tmp/gcp-key.json,/terraform-scripts/gcp-key.json"
+      # Also you don't need to assign square brackets at the start and end. 
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
       PATH_LIST: "/tmp/gcp-key.json"
       GCP_AUTHENTICATE_AT: "/tmp/gcp-key.json"
@@ -22,12 +24,3 @@ jobs:
             --field authenticate_at_path="${{ env.GCP_AUTHENTICATE_AT }}" \
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
-
-      # - name: API Service Request
-      #   uses: buildeventdriven/resource_creation/.github/actions/request-api-service@main
-      #   with:
-      #     gcp_project_id: ${{ secrets.GCP_PROJECT }}
-      #     api_service: ${{ env.API_SERVICE_TO_ENABLE }}
-      #     access_key: ${{ secrets.GCP_SA_KEY }}
-      # When you assign a list Make sure here are no spaces before or after comma , e.g. "/tmp/gcp-key.json,/terraform-scripts/gcp-key.json"
-      # Also you don't need to assign square brackets at the start and end. 

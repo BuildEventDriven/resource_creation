@@ -36,29 +36,3 @@ runs:
       env:
         gcp_project_id: ${{ inputs.gcp_project_id }}
         authenticate_at_path: ${{ inputs.authenticate_at_path }}
-
-    # - name: Save GCP Service Account Key (Properly)
-    #   shell: bash
-    #   run: |
-    #     echo '${{ inputs.access_key }}' | jq '.' > /tmp/gcp-key.json
-
-    # - name: Authenticate with Google Cloud
-    #   shell: bash
-    #   run: |
-    #     gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-    #     gcloud config set project ${{ inputs.gcp_project_id }}
-    #     gcloud auth list
-
-    # - name: Remove GCP-Key file
-    #   shell: bash
-    #   run: |
-    #     rm /tmp/gcp-key.json
-
-    # - name: Authenticate with Google Cloud
-    #   shell: bash
-    #   run: |
-    #     chmod +x .github/scripts/google-auth.sh
-    #     .github/scripts/google-auth.sh
-    #   env:
-    #     gcp_project_id: ${{ inputs.gcp_project_id }}
-    #     authenticate_at_path: ${{ inputs.authenticate_at_path }}
