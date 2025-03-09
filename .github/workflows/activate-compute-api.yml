@@ -7,19 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     env:
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
-      KEY_NAME: "GCP_SA_KEY"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # - name: Check and format GCP Service Account Key
-      #   shell: bash
-      #   run: |
-      #     echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
+      # - name: API Service Request
+      #   uses: buildeventdriven/resource_creation/.github/actions/request-api-service@main
+      #   with:
+      #     gcp_project_id: ${{ secrets.GCP_PROJECT }}
+      #     api_service: ${{ env.API_SERVICE_TO_ENABLE }}
+      #     access_key: ${{ secrets.GCP_SA_KEY }}
 
-      - name: API Service Request
-        uses: buildeventdriven/resource_creation/.github/actions/request-api-service@main
+      - name: Trigger Enable API Service Workflow
+        uses: peter-evans/workflow-dispatch@v1
         with:
-          gcp_project_id: ${{ secrets.GCP_PROJECT }}
-          api_service: ${{ env.API_SERVICE_TO_ENABLE }}
-          access_key: ${{ secrets.GCP_SA_KEY }}
+          workflow: 'request-service-api.yml'
+          ref: 'main'  # Specify the branch to run the workflow from
+          inputs: 
+            gcp_project_id: ${{ secrets.GCP_PROJECT }}
+            api_service: ${{ env.API_SERVICE_TO_ENABLE }}
+            access_key: ${{ secrets.GCP_SA_KEY }}
