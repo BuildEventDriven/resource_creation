@@ -22,4 +22,4 @@ jobs:
         with:
           gcp_project_id: ${{ secrets.GCP_PROJECT }}
           api_service: ${{ env.API_SERVICE_TO_ENABLE }}
-          access_key_name: ${{ env.KEY_NAME }}
+          access_key: ${{ secrets.GCP_SA_KEY }}
