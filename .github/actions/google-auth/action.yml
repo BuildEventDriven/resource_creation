@@ -17,7 +17,7 @@ runs:
     - name: Writing Again to GCP Service Account Key to a json file
       shell: bash
       run: |
-        echo "${{ inputs.access_key }}" | jq '.' > ./gcp-key.json
+        echo '${{ inputs.access_key }}' | jq '.' > ./gcp-key.json
 
     - name: Authenticate with Google Cloud
       shell: bash
