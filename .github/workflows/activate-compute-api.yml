@@ -6,6 +6,8 @@ jobs:
   trigger-enable-api-service:
     runs-on: ubuntu-latest
     env:
+      path_list: "/tmp/gcp-key.json"
+      authenticate_at_path: "/tmp/gcp-key.json"
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
     steps:
       - name: Checkout repository
@@ -16,7 +18,9 @@ jobs:
           gh workflow run request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
-            --field access_key="${{ secrets.GCP_SA_KEY }}"
+            --field access_key="${{ secrets.GCP_SA_KEY }}" \
+            --field path_list="${{ env.path_list. }}" \
+            --field authenticate_at_path="${{ env.authenticate_at_path. }}"
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 
@@ -26,3 +30,5 @@ jobs:
       #     gcp_project_id: ${{ secrets.GCP_PROJECT }}
       #     api_service: ${{ env.API_SERVICE_TO_ENABLE }}
       #     access_key: ${{ secrets.GCP_SA_KEY }}
+      # When you assign a list Make sure here are no spaces before or after comma , e.g. "/tmp/gcp-key.json,/terraform-scripts/gcp-key.json"
+      # Also you don't need to assign square brackets at the start and end. 
