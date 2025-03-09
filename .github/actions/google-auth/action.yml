@@ -16,7 +16,7 @@ runs:
     - name: Save GCP Service Account Key (Properly)
       shell: bash
       run: |
-        echo ${{ inputs.gcp_sa_key }} | jq '.' > /tmp/gcp-key.json
+        echo "${{ inputs.gcp_sa_key }}" | jq '.' > /tmp/gcp-key.json
 
     - name: Authenticate with Google Cloud
       shell: bash
