@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
+      PATH_LIST: "/tmp/gcp-key.json"
+      GCP_AUTHENTICATE_AT: "/tmp/gcp-key.json"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -15,7 +17,9 @@ jobs:
         run: |
           gh workflow run request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
-            --field api_service="${{ env.API_SERVICE_TO_ENABLE }}"
+            --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
+            --field path_list="${{ env.PATH_LIST }}" \
+            --field authenticate_at_path="${{ env.GCP_AUTHENTICATE_AT }}" \
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 
