@@ -23,7 +23,6 @@ jobs:
         with:
           workflow: 'request-service-api.yml'
           ref: 'main'  # Specify the branch to run the workflow from
-          inputs: 
-            gcp_project_id: ${{ secrets.GCP_PROJECT }}
-            api_service: ${{ env.API_SERVICE_TO_ENABLE }}
-            access_key: ${{ secrets.GCP_SA_KEY }}
+          gcp_project_id: ${{ secrets.GCP_PROJECT }}
+          api_service: ${{ env.API_SERVICE_TO_ENABLE }}
+          access_key: ${{ secrets.GCP_SA_KEY }}
