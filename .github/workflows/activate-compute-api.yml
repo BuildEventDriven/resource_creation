@@ -6,32 +6,17 @@ jobs:
   trigger-enable-api-service:
     runs-on: ubuntu-latest
     env:
-      LIST_OF_GCP_PATHS: "/tmp/gcp-key.json"
-      AUTHENTICATE_GCP_WITH_PATH: "/tmp/gcp-key.json"
       API_SERVICE_TO_ENABLE: "compute.googleapis.com"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Write GCP Service Account Key to File
-        shell: bash
-        run: |
-          echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
-          
-      - name: Upload GCP Service Account Key as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: create-instance-gcp-key
-          path: /tmp/gcp-key.json
 
       - name: Trigger Enable API Service Workflow
         run: |
           gh workflow run request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
-            --field access_key="${{ secrets.GCP_SA_KEY }}" \
-            --field path_list="${{ env.LIST_OF_GCP_PATHS }}" \
-            --field authenticate_at_path="${{ env.AUTHENTICATE_GCP_WITH_PATH }}"
+            --field access_key="${{ secrets.GCP_SA_KEY }}"
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
 

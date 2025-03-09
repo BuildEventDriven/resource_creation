@@ -1,17 +1,8 @@
 name: Google Cloud Authentication
 description: "Authenticate with Google Cloud using a service account key."
 inputs:
-  access_key:
-    description: "The Google Cloud service account key in JSON format."
-    required: true
   gcp_project_id:
     description: "The Google Cloud project ID."
-    required: true
-  path_list:
-    description: "Paths that you want to write GCP key at."
-    required: true 
-  authenticate_at_path:
-    description: 'Path to gcp key, available for authentication.'
     required: true
 
 runs:
@@ -20,15 +11,14 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Download GCP Service Account Key Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: create-instance-gcp-key
-
     - name: Authenticate with GCP
       shell: bash
       run: |
-        gcloud auth activate-service-account --key-file=./gcp-key.json
+        echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
+        gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+        gcloud config set project "$gcp_project_id"
+        gcloud auth list
+        rm /tmp/gcp-key.json
 
     # - name: Authenticate with Google Cloud
     #   shell: bash
