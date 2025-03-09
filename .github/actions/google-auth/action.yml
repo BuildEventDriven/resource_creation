@@ -13,6 +13,10 @@ runs:
   steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    
+    - name: Check Type of access_key
+      run: |
+        echo "Type of access_key: $(echo '${{ inputs.access_key }}' | file -)"
 
     - name: Writing Again to GCP Service Account Key to a json file
       shell: bash
