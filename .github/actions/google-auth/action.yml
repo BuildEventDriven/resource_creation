@@ -16,28 +16,16 @@ runs:
   steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    
-    # - name: Check Type of access_key
-    #   shell: bash
-    #   run: |
-    #     echo "Type of access_key: $(echo '${{ inputs.access_key }}' | file -)"
 
-    # - name: Writing Again to GCP Service Account Key to a json file
-    #   shell: bash
-    #   run: |
-    #     echo '${{ inputs.access_key }}' | jq '.' > ./gcp-key.json
-    
     - name: Text to JSON to JSON file
       shell: bash
       run: |
-        echo "$access_key" > ./access_key.txt
-        json_data=$(cat ./access_key.txt | jq '.')
-        echo "$json_data" | jq '.' > ./gcp-key.json
+        echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
 
     - name: Authenticate with Google Cloud
       shell: bash
       run: |
-        gcloud auth activate-service-account --key-file=./gcp-key.json
+        gcloud auth activate-service-account --key-file = /tmp/gcp-key.json
         gcloud config set project ${{ inputs.gcp_project_id }}
         gcloud auth list
     
