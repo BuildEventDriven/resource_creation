@@ -20,20 +20,26 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Write key to desired path/s
-      shell: bash
-      run: |
-        chmod +x .github/scripts/write-gcp-key.sh
-        .github/scripts/write-gcp-key.sh
-      env:
-        access_key: ${{ inputs.access_key }}
-        path_list: ${{ inputs.path_list }}
+   - name: Download GCP Service Account Key Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: create-instance-gcp-key
 
-    - name: Authenticate with Google Cloud
-      shell: bash
+    - name: Print the downloaded file's full path
       run: |
-        chmod +x .github/scripts/google-auth.sh
-        .github/scripts/google-auth.sh
-      env:
-        gcp_project_id: ${{ inputs.gcp_project_id }}
-        authenticate_at_path: ${{ inputs.authenticate_at_path }}
+        # Find the downloaded artifact directory
+        artifact_dir=$(find . -name 'gcp-key.json' -type f)
+        echo "The downloaded GCP service account key is located at: $artifact_dir"
+    
+    - name: Authenticate with GCP
+      run: |
+        gcloud auth activate-service-account --key-file=gcp-key.json
+
+    # - name: Authenticate with Google Cloud
+    #   shell: bash
+    #   run: |
+    #     chmod +x .github/scripts/google-auth.sh
+    #     .github/scripts/google-auth.sh
+    #   env:
+    #     gcp_project_id: ${{ inputs.gcp_project_id }}
+    #     authenticate_at_path: ${{ inputs.authenticate_at_path }}
