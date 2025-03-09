@@ -15,6 +15,7 @@ runs:
       uses: actions/checkout@v3
     
     - name: Check Type of access_key
+      shell: bash
       run: |
         echo "Type of access_key: $(echo '${{ inputs.access_key }}' | file -)"
 
