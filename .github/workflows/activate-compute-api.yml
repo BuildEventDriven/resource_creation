@@ -14,7 +14,7 @@ jobs:
       - name: Check and format GCP Service Account Key
         shell: bash
         run: |
-        echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
+          echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
 
       - name: API Service Request
         uses: buildeventdriven/resource_creation/.github/actions/request-api-service@main
