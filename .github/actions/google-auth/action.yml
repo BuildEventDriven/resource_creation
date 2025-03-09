@@ -26,7 +26,7 @@ runs:
         chmod +x .github/scripts/write-gcp-key.sh
         .github/scripts/write-gcp-key.sh
       env:
-        access_key: ${{ secrets.access_key }}
+        access_key: ${{ inputs.access_key }}
         path_list: ${{ inputs.path_list }}
 
     - name: Authenticate with Google Cloud
