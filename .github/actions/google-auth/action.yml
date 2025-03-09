@@ -26,6 +26,11 @@ runs:
     #   shell: bash
     #   run: |
     #     echo '${{ inputs.access_key }}' | jq '.' > ./gcp-key.json
+    
+    - name: Text to JSON to JSON file
+        echo "$access_key" > ./access_key.txt
+        json_data=$(cat ./access_key.txt | jq '.')
+        echo "$json_data" | jq '.' > ./gcp-key.json
 
     - name: Authenticate with Google Cloud
       shell: bash

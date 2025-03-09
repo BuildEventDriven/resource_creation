@@ -21,20 +21,20 @@ jobs:
         run: |
           echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
 
-          current_directory=$(pwd)
-          gcp_key_file_path="$current_directory/tmp/gcp-key.json"
-          echo "GCP Key File Path: $gcp_key_file_path"
-          echo "GCP_KEY_FILE_PATH=$gcp_key_file_path" >> $GITHUB_EN
+    # current_directory=$(pwd)
+    # gcp_key_file_path="$current_directory/tmp/gcp-key.json"
+    # echo "GCP Key File Path: $gcp_key_file_path"
+    # echo "GCP_KEY_FILE_PATH=$gcp_key_file_path" >> $GITHUB_EN
 
       - name: Trigger Enable API Service Workflow
         run: |
           gh workflow run request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
-            --field access_key="${{ secrets.GCP_SA_KEY }}" \
-            --field gcp_key_file_path="${{ env.GCP_KEY_FILE_PATH }}"
+            --field access_key="${{ secrets.GCP_SA_KEY }}"
         env:
             GH_TOKEN: ${{ secrets.TERRAFORM_PAT }}  
+    # --field gcp_key_file_path="${{ env.GCP_KEY_FILE_PATH }}"
 
       # - name: API Service Request
       #   uses: buildeventdriven/resource_creation/.github/actions/request-api-service@main
