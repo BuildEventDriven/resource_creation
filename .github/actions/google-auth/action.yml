@@ -7,29 +7,52 @@ inputs:
   access_key:
     description: "The Google Cloud project ID."
     required: true
-
+  authenticate_at_path:
+    description: "With gcp-key at path which you'd like to use for authentication."
+    required: true
+  path_list:
+    description: "List of paths you'd like to write the gcp-key."
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Save GCP Service Account Key (Properly)
+    - name: Write key to desired path/s
       shell: bash
       run: |
-        echo '${{ inputs.access_key }}' | jq '.' > /tmp/gcp-key.json
+        chmod +x .github/scripts/write-gcp-key.sh
+        .github/scripts/write-gcp-key.sh
+      env:
+        access_key: ${{ inputs.access_key }}
+        path_list: ${{ inputs.path_list }}
 
     - name: Authenticate with Google Cloud
       shell: bash
       run: |
-        gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-        gcloud config set project ${{ inputs.gcp_project_id }}
-        gcloud auth list
+        chmod +x .github/scripts/google-auth.sh
+        .github/scripts/google-auth.sh
+      env:
+        gcp_project_id: ${{ inputs.gcp_project_id }}
+        authenticate_at_path: ${{ inputs.authenticate_at_path }}
 
-    - name: Remove GCP-Key file
-      shell: bash
-      run: |
-        rm /tmp/gcp-key.json
+    # - name: Save GCP Service Account Key (Properly)
+    #   shell: bash
+    #   run: |
+    #     echo '${{ inputs.access_key }}' | jq '.' > /tmp/gcp-key.json
+
+    # - name: Authenticate with Google Cloud
+    #   shell: bash
+    #   run: |
+    #     gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+    #     gcloud config set project ${{ inputs.gcp_project_id }}
+    #     gcloud auth list
+
+    # - name: Remove GCP-Key file
+    #   shell: bash
+    #   run: |
+    #     rm /tmp/gcp-key.json
 
     # - name: Authenticate with Google Cloud
     #   shell: bash
