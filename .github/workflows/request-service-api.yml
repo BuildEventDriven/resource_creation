@@ -1,4 +1,4 @@
-name: Enable Eequest for an API 
+name: Requested-API Activation 
 
 on:
   workflow_dispatch:

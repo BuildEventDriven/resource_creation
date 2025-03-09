@@ -1,4 +1,4 @@
-name: Google Cloud Authentication
+name: Authenticating-GCP
 description: "Authenticate with Google Cloud using a service account key."
 inputs:
   gcp_project_id:

@@ -1,4 +1,4 @@
-name: Enable request - Compute API Service
+name: Enabling-Compute API Service
 
 on:
   workflow_dispatch:
