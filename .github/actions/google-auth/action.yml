@@ -7,9 +7,12 @@ inputs:
   gcp_project_id:
     description: "The Google Cloud project ID."
     required: true
-  # gcp_key_file_path:
-  #   escription: 'Path to pre-written gcp key, available for use.'
-  #   required: true
+  path_list:
+    description: "Paths that you want to write GCP key at."
+    required: true 
+  authenticate_at_path:
+    description: 'Path to gcp key, available for authentication.'
+    required: true
 
 runs:
   using: "composite"
@@ -17,21 +20,20 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Text to JSON to JSON file
+    - name: Write key to desired path/s
       shell: bash
       run: |
-        echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
+        chmod +x .github/scripts/write-gcp-key.sh
+        .github/scripts/write-gcp-key.sh
+      env:
+        access_key: ${{ secrets.access_key }}
+        path_list: ${{ inputs.path_list }}
 
     - name: Authenticate with Google Cloud
       shell: bash
       run: |
-        gcloud auth activate-service-account --key-file = /tmp/gcp-key.json
-        gcloud config set project ${{ inputs.gcp_project_id }}
-        gcloud auth list
-    
-    # ${{ inputs.gcp_key_file_path }}
-
-    - name: Clean up
-      shell: bash
-      run: |
-        rm /tmp/gcp-key.json
+        chmod +x .github/scripts/google-auth.sh
+        .github/scripts/google-auth.sh
+      env:
+        gcp_project_id: ${{ inputs.gcp_project_id }}
+        authenticate_at_path: ${{ inputs.authenticate_at_path }}

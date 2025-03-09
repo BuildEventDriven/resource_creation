@@ -12,7 +12,12 @@ on:
       access_key:
         description: 'GCP Service Account Key'
         required: true
-
+      path_list:
+        description: "Paths that you want to write GCP key at."
+        required: true 
+      authenticate_at_path:
+        description: 'Path to gcp key, available for authentication.'
+        required: true
 jobs:
   enable-api-service:
     runs-on: ubuntu-latest
@@ -29,6 +34,9 @@ jobs:
       - name: Google Cloud Authentication
         uses: buildeventdriven/resource_creation/.github/actions/google-auth@main
         with:
+          access_key: ${{ inputs.access_key }}
+          path_list: ${{ inputs.path_list }}
+          authenticate_at_path: ${{ inputs.authenticate_at_path }}
           gcp_project_id: ${{ inputs.gcp_project_id }}
 
       - name: Enable API Service
