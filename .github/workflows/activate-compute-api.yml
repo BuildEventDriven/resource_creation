@@ -16,7 +16,7 @@ jobs:
       - name: Write GCP Service Account Key to File
         shell: bash
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" | jq '.' > /tmp/gcp-key.json
+          echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
           
       - name: Upload GCP Service Account Key as Artifact
         uses: actions/upload-artifact@v4
