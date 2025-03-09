@@ -38,9 +38,10 @@ runs:
       shell: bash
       run: |
         gcloud auth activate-service-account --key-file=./gcp-key.json
-    # ${{ inputs.gcp_key_file_path }}
         gcloud config set project ${{ inputs.gcp_project_id }}
         gcloud auth list
+    
+    # ${{ inputs.gcp_key_file_path }}
 
     - name: Clean up
       shell: bash
