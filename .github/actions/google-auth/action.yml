@@ -13,10 +13,11 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
       
-    - name: Save GCP Service Account Key (Properly)
-      shell: bash
-      run: |
-        echo "${{ inputs.gcp_sa_key }}" > /tmp/gcp-key.json
+    # - name: Save GCP Service Account Key (Properly)
+    #   shell: bash
+    #   run: |
+    #     echo '${{ secrets.GCP_SA_KEY }}' | jq '.' > /tmp/gcp-key.json
+    #     echo "${{ inputs.gcp_sa_key }}" > /tmp/gcp-key.json
 
     - name: Authenticate with Google Cloud
       shell: bash
