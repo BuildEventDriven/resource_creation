@@ -1,7 +1,7 @@
 name: Actioned trigger-Plan-Apply Kafka Brokers
 
 on:
-  workflow_dispatch:
+  # workflow_dispatch:
 
 jobs:
   terraform:
