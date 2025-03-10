@@ -1,4 +1,4 @@
-name: UTL-Requested API Activation 
+name: UTL-Activate GCP Service API 
 
 on:
   workflow_dispatch:
@@ -22,12 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ inputs.gcp_project_id }}
-
       - name: Google Cloud Authentication
         uses: buildeventdriven/resource_creation/.github/actions/google-auth@main
         with:
@@ -35,6 +29,11 @@ jobs:
           access_key: ${{ secrets.GCP_SA_KEY }}
           authenticate_at_path: ${{inputs.authenticate_at_path }}
           path_list: ${{inputs.path_list }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ inputs.gcp_project_id }}
 
       - name: Enable API Service
         uses: buildeventdriven/resource_creation/.github/actions/enable-api-service@main
