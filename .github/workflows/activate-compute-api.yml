@@ -17,7 +17,7 @@ jobs:
 
       - name: Trigger Enable API Service Workflow
         run: |
-          gh workflow run subflows/request-service-api.yml --ref main \
+          gh workflow run buildeventdriven/resource_creation/.github/workflows/subflows/request-service-api.yml --ref main \
             --field gcp_project_id="${{ secrets.GCP_PROJECT }}" \
             --field api_service="${{ env.API_SERVICE_TO_ENABLE }}" \
             --field path_list="${{ env.PATH_LIST }}" \
